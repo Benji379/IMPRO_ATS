@@ -1,5 +1,6 @@
 package com.ventanas.generales;
 
+import Git.GitHubUpdater;
 import com.formato.procesos.EscrituraAnimada;
 import com.ventanas.administrador.*;
 import java.awt.Color;
@@ -22,6 +23,7 @@ import javax.swing.JFrame;
 public final class frm_Login extends javax.swing.JFrame {
 
     public frm_Login() {
+        GitHubUpdater.checkAndUpdate();
         initComponents();
         DiseñoInicial();
         MisDefault();
@@ -366,7 +368,7 @@ public final class frm_Login extends javax.swing.JFrame {
     private void EntrarSistema() throws SQLException {
         daoLogin usuario = new daoLogin();
         boolean entrar = usuario.autenticarUsuario("trabajadores", "dni", "contraseña", txtUsuario.getText(), txtContraseña.getText());
-        
+
         if (entrar) {
             daoLogin.guardarDatos();
             frm_Principal abrir = new frm_Principal();

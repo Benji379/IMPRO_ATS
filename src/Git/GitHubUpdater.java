@@ -1,19 +1,13 @@
 package Git;
-
-/**
- *
- * @author Benji
- */
 import java.io.*;
 import java.net.*;
+import java.nio.file.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class GitHubUpdater {
-
-    // URL del repositorio de GitHub
-    private static final String GITHUB_REPO_URL = "https://github.com/tu_usuario/tu_repositorio/archive/main.zip";
-    private static final String TEMP_ZIP_FILE = "temp_update.zip";
+    private static final String GITHUB_REPO_URL = "https://github.com/Benji379/IMPRO_ATS/archive/refs/heads/main.zip";
+    private static final String TEMP_ZIP_FILE = "IMPRO_ATS-main.zip";
 
     public static void main(String[] args) {
         checkAndUpdate();
@@ -28,7 +22,7 @@ public class GitHubUpdater {
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 // Descargar el archivo ZIP del repositorio
                 try (InputStream inputStream = connection.getInputStream();
-                        FileOutputStream outputStream = new FileOutputStream(TEMP_ZIP_FILE)) {
+                     FileOutputStream outputStream = new FileOutputStream(TEMP_ZIP_FILE)) {
                     byte[] buffer = new byte[4096];
                     int bytesRead;
                     while ((bytesRead = inputStream.read(buffer)) != -1) {
@@ -36,11 +30,16 @@ public class GitHubUpdater {
                     }
                 }
 
-                // Descomprimir el archivo ZIP
+                // Crear un directorio temporal dentro del proyecto
+                File projectDirectory = new File(System.getProperty("user.dir"));
+                File tempDirectory = new File(projectDirectory, "temp");
+                tempDirectory.mkdir();
+
+                // Descomprimir el archivo ZIP en el directorio temporal
                 try (ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(TEMP_ZIP_FILE))) {
                     ZipEntry entry = zipInputStream.getNextEntry();
                     while (entry != null) {
-                        File file = new File(entry.getName());
+                        File file = new File(tempDirectory, entry.getName());
                         if (!entry.isDirectory()) {
                             try (FileOutputStream fos = new FileOutputStream(file)) {
                                 byte[] buffer = new byte[1024];
@@ -58,6 +57,16 @@ public class GitHubUpdater {
                 // Eliminar el archivo ZIP temporal
                 File tempFile = new File(TEMP_ZIP_FILE);
                 tempFile.delete();
+
+                // Mover los archivos extraídos a la ubicación correcta
+                for (File file : tempDirectory.listFiles()) {
+                    Path sourcePath = file.toPath();
+                    Path destinationPath = new File(projectDirectory, sourcePath.getFileName().toString()).toPath();
+                    Files.move(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+                }
+
+                // Eliminar el directorio temporal
+                tempDirectory.delete();
 
                 // Reiniciar el programa o recargar las clases actualizadas
                 // Implementa aquí la lógica para reiniciar o recargar tu programa
