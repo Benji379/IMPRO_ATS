@@ -1,6 +1,5 @@
 package com.ventanas.generales;
 
-import Git.GitHubUpdater;
 import com.formato.procesos.EscrituraAnimada;
 import com.ventanas.administrador.*;
 import java.awt.Color;
@@ -23,7 +22,6 @@ import javax.swing.JFrame;
 public final class frm_Login extends javax.swing.JFrame {
 
     public frm_Login() {
-        GitHubUpdater.checkAndUpdate();
         initComponents();
         DiseñoInicial();
         MisDefault();
