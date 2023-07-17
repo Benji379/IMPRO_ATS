@@ -2,6 +2,7 @@ package com.ventanas.administrador;
 
 import com.chat.component.ChatBox;
 import com.chat.model.ModelMessage;
+import com.dao.ConexionBd.ConexionSQL;
 import com.formato.UIDesing.JScrollPaneUtils;
 import com.formato.UIDesing.TableDark;
 import com.dao.InnerJoin.DatabaseUtils;
@@ -9,8 +10,12 @@ import com.formato.procesos.JListCustom;
 import com.dao.InnerJoin.daoLogin;
 import com.formato.procesos.rellenarList;
 import java.awt.BorderLayout;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JList;
@@ -29,13 +34,15 @@ public final class chat extends javax.swing.JPanel {
     static public int puertoMandar;
     static public String selectedName;
     static public String nombre;
-    
+
+    List<String> listaColumna3 = new ArrayList<>();
+
     public chat() throws SQLException {
         initComponents();
         limpiar();
+        DatabaseUtils.llenarJListDesdeTabla("trabajadores", "nombres", "apellidos", "puerto", myList1);
         panelMensajes.chatArea.setTitle("Chat IMPRO_ATS");
         JListCustom.customizeJList(myList1, 40, 3, 9);
-        DatabaseUtils.llenarJListDesdeTabla("trabajadores", "nombres", "apellidos", myList1);
         JListInit();
         jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
         ScrollBarCustom sp = new ScrollBarCustom();
@@ -44,23 +51,40 @@ public final class chat extends javax.swing.JPanel {
     }
 
     public void JListInit() {
+        try {
+            Connection conet = new ConexionSQL().conexion();
+            Statement st;
+            ResultSet rs;
+            // Consulta SQL para recuperar los datos de la columna3, ordenados por columna1 y columna2
+            String query = "SELECT " + "puerto" + " FROM " + "trabajadores" + " ORDER BY " + "nombres" + ", " + "apellidos";
+            st = conet.createStatement();
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                listaColumna3.add(rs.getString("puerto"));
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR: " + e.getMessage());
+        }
         myList1.addListSelectionListener((ListSelectionEvent e) -> {
             limpiar();
             if (!e.getValueIsAdjusting()) {
                 JList<String> source = (JList<String>) e.getSource();
+                String valorColumna3Seleccionado = listaColumna3.get(myList1.getSelectedIndex());
                 selectedName = source.getSelectedValue();
-                int index = myList1.getSelectedIndex();
                 nombre = selectedName;
-                puertoMandar = Integer.parseInt(daoLogin.consultarRango("trabajadores", "id", String.valueOf((index + 1)), "puerto"));
+                puertoMandar = Integer.parseInt(valorColumna3Seleccionado);
+                System.out.println("\nNombre: " + nombre);
+                System.out.println("Puerto: " + puertoMandar);
                 panelMensajes.chatArea.setTitle(nombre);
                 rellenar(puerto, String.valueOf(puertoMandar));
+
             }
         });
         TableDark p = new TableDark();
         p.fixTable(jScrollPane1);
         JScrollPaneUtils.removeWhiteBorder(jScrollPane1);
     }
-    
+
     public void limpiar() {
         panelMensajes p = new panelMensajes();
         p.setSize(520, 590);
@@ -72,15 +96,15 @@ public final class chat extends javax.swing.JPanel {
     }
 
     public void rellenar(String miPuerto, String puertoMandar) {
-        
+
         ArrayList<ArrayList<String>> matriz = new ArrayList<>();
-        
+
         try {
             rellenarList.llenarArrayListDesdeTabla("conversacion", matriz);
         } catch (SQLException e) {
             System.out.println("ERROR:" + e.getMessage());
         }
-        
+
         Icon icon = new ImageIcon(getClass().getResource("/com/img/iconos/icon.png"));
         String portMio;
         String portSuyo;

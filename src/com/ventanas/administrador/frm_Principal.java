@@ -1,7 +1,6 @@
 package com.ventanas.administrador;
 
 import com.formato.procesos.Clima;
-import com.formato.procesos.Data;
 import com.dao.InnerJoin.daoLogin;
 import com.ventanas.administrador.trabajadores.menuTrabajadores;
 import java.awt.BorderLayout;
@@ -68,7 +67,7 @@ public final class frm_Principal extends javax.swing.JFrame {
         contenedor.repaint();
         setTitle("IMRPO_ATS [Home]");
     }
-
+    
     public void fotoDePerfil() {
         String direccion = "/com/img/paneles/";
         if (rango.equalsIgnoreCase("Administrador")) {
@@ -388,7 +387,9 @@ public final class frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVentasActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
-        // TODO add your handling code here:
+        frmInventario abrir = new frmInventario();
+        abrir.setVisible(true);
+        hide();
     }//GEN-LAST:event_btnProductosActionPerformed
 
     public static void abrirCorreo() {

@@ -10,6 +10,7 @@ import com.chat.swing.ChatEvent;
 import com.formato.procesos.ChatGpt;
 import com.dao.InnerJoin.DatabaseUtils;
 import com.dao.InnerJoin.daoLogin;
+import com.formato.procesos.Proceso;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
@@ -31,7 +32,7 @@ public final class panelMensajes extends javax.swing.JPanel implements Observer 
     String fecha_hora;
     String mensage;
     String MENSAGE;
-    
+
     public panelMensajes() {
         initComponents();
         int puert = Integer.parseInt(puerto);
@@ -48,7 +49,8 @@ public final class panelMensajes extends javax.swing.JPanel implements Observer 
             @Override
             public void mousePressedSendButton(ActionEvent evt) {
                 Icon icon = new ImageIcon(getClass().getResource("/com/img/iconos/icon.png"));
-                String name = daoLogin.consultarRango("trabajadores", "dni", documento, "nombres");
+                String name = (Proceso.obtenerPalabra(daoLogin.consultarRango("trabajadores", "dni", documento, "nombres"), 1))
+                        + " " + (Proceso.obtenerPalabra(daoLogin.consultarRango("trabajadores", "dni", documento, "apellidos"), 1));
                 String date = df.format(new Date());
                 fecha_hora = date;
                 mensage = panelMensajes.chatArea.getText();
