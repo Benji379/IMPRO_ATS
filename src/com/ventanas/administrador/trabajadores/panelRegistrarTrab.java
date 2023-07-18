@@ -420,15 +420,15 @@ public class panelRegistrarTrab extends javax.swing.JPanel {
     }//GEN-LAST:event_txtEdadKeyTyped
 
     private void txtContraseñaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraseñaKeyTyped
-        Proceso.limitacionCaracteres(txtContraseña, evt, 15);
+        Proceso.limitacionCaracteres(txtContraseña, evt, 15, false);
     }//GEN-LAST:event_txtContraseñaKeyTyped
 
     private void txtContraseña2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraseña2KeyTyped
-        Proceso.limitacionCaracteres(txtContraseña2, evt, 15);
+        Proceso.limitacionCaracteres(txtContraseña2, evt, 15, false);
     }//GEN-LAST:event_txtContraseña2KeyTyped
 
     private void txtCorreoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCorreoKeyTyped
-        Proceso.limitacionCaracteres(txtCorreo, evt, 70);
+        Proceso.limitacionCaracteres(txtCorreo, evt, 70, false);
     }//GEN-LAST:event_txtCorreoKeyTyped
 
     private void ojoCerradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ojoCerradoActionPerformed

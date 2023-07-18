@@ -53,14 +53,20 @@ public class Proceso {
         textField.setForeground(new java.awt.Color(n1, n2, n3));
     }
 
-    public static void limitacionCaracteres(JTextField txtField, KeyEvent evt, int cantNumeros) {
-        int key = evt.getKeyChar();
-        boolean espacio = key == KeyEvent.VK_SPACE;
-        if (espacio) {
-            evt.consume();
-        } else {
+    public static void limitacionCaracteres(JTextField txtField, KeyEvent evt, int cantNumeros, boolean conEspacio) {
+        if (conEspacio) {
             if (txtField.getText().length() >= cantNumeros) {
                 evt.consume();
+            }
+        } else {
+            int key = evt.getKeyChar();
+            boolean espacio = key == KeyEvent.VK_SPACE;
+            if (espacio) {
+                evt.consume();
+            } else {
+                if (txtField.getText().length() >= cantNumeros) {
+                    evt.consume();
+                }
             }
         }
     }

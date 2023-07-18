@@ -1,12 +1,14 @@
 package com.ventanas.administrador;
 
 import com.formato.UIDesing.JScrollPaneUtils;
-import com.formato.UIDesing.TableDark;
 import com.formato.procesos.ImageUtils;
 import com.formato.procesos.Proceso;
+import com.ventanas.administrador.trabajadores.NuevoProducto;
 import java.awt.Color;
 import java.awt.Toolkit;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import scrollbar.ScrollBarCustom;
 
 /**
@@ -15,24 +17,26 @@ import scrollbar.ScrollBarCustom;
  */
 public class frmInventario extends javax.swing.JFrame {
 
+    public static boolean ventanaNuevoProducto = false;
+
     public frmInventario() {
         initComponents();
         this.setLocationRelativeTo(null);
         setBackground(new Color(1.0f, 1.0f, 1.0f, 0.0f));
         panelInventario.setBackground(new Color(1.0f, 1.0f, 1.0f, 0.0f));
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/com/img/iconos/icon.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/com/img/iconos/inventario.png")));
         ImageUtils.setScaledImageFromUrl("https://s7d2.scene7.com/is/image/TottusPE/42756819_2?wid=240&hei=240&qlt=70&fmt=webp", imagenProducto);
-        JTableScrollBarCustom();
+        JTableScrollBarCustom(jScrollPaneDatos);
+        JTableScrollBarCustom(jScrollPaneFiltrar);
+        TransparentarTxt();
     }
 
-    private void JTableScrollBarCustom() {
-        TableDark p = new TableDark();
-        p.fixTable(jScrollPaneDatos);
-        JScrollPaneUtils.removeWhiteBorder(jScrollPaneDatos);
-        jScrollPaneDatos.setVerticalScrollBar(new ScrollBarCustom());
+    private void JTableScrollBarCustom(JScrollPane scrollPane) {
+        JScrollPaneUtils.removeWhiteBorder(scrollPane);
+        scrollPane.setVerticalScrollBar(new ScrollBarCustom());
         ScrollBarCustom sp = new ScrollBarCustom();
         sp.setOrientation(JScrollBar.HORIZONTAL);
-        jScrollPaneDatos.setHorizontalScrollBar(sp);
+        scrollPane.setHorizontalScrollBar(sp);
     }
 
     @SuppressWarnings("unchecked")
@@ -40,9 +44,28 @@ public class frmInventario extends javax.swing.JFrame {
     private void initComponents() {
 
         panelInventario = new javax.swing.JPanel();
-        jlbFiltrarCodigo = new javax.swing.JLabel();
+        btnFiltrar = new javax.swing.JButton();
+        btnAgregarNuevo = new javax.swing.JButton();
+        jScrollPaneFiltrar = new javax.swing.JScrollPane();
+        panelFiltrar = new javax.swing.JPanel();
+        txtFiltrarStock = new javax.swing.JTextField();
+        separador8 = new javax.swing.JLabel();
+        jlbFiltrarStock = new javax.swing.JLabel();
+        txtFiltrarPrecio = new javax.swing.JTextField();
+        separador9 = new javax.swing.JLabel();
+        jlbFiltrarPrecio = new javax.swing.JLabel();
         txtFiltrarCodigo = new javax.swing.JTextField();
-        separador = new javax.swing.JLabel();
+        separador10 = new javax.swing.JLabel();
+        jlbFiltrarCodigo = new javax.swing.JLabel();
+        txtFiltrarNombre = new javax.swing.JTextField();
+        separador11 = new javax.swing.JLabel();
+        jlbFiltrarNombre = new javax.swing.JLabel();
+        txtFiltrarMarca = new javax.swing.JTextField();
+        separador12 = new javax.swing.JLabel();
+        jlbFiltrarMarca = new javax.swing.JLabel();
+        txtFiltrarCategoria = new javax.swing.JTextField();
+        separador13 = new javax.swing.JLabel();
+        jlbFiltrarCategoria = new javax.swing.JLabel();
         btnAtras = new javax.swing.JButton();
         jlbTitulo = new javax.swing.JLabel();
         BarraTitulo = new javax.swing.JLabel();
@@ -71,23 +94,90 @@ public class frmInventario extends javax.swing.JFrame {
         separador3 = new javax.swing.JLabel();
         separador4 = new javax.swing.JLabel();
         separador6 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        fondoFiltros = new javax.swing.JLabel();
+        fonoDatos = new javax.swing.JLabel();
         FONDO = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("IMPRO_ATS [Inventario]");
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelInventario.setBackground(new java.awt.Color(24, 24, 24));
         panelInventario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jlbFiltrarCodigo.setFont(new java.awt.Font("Copperplate Gothic Bold", 0, 24)); // NOI18N
-        jlbFiltrarCodigo.setForeground(new java.awt.Color(255, 255, 255));
-        jlbFiltrarCodigo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jlbFiltrarCodigo.setText("Codigo:");
-        panelInventario.add(jlbFiltrarCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
+        btnFiltrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/modulos/btnFiltrar.png"))); // NOI18N
+        btnFiltrar.setBorder(null);
+        btnFiltrar.setBorderPainted(false);
+        btnFiltrar.setContentAreaFilled(false);
+        btnFiltrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnFiltrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnFiltrar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/modulos/btnFiltrar_press.png"))); // NOI18N
+        panelInventario.add(btnFiltrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 170, 70, 60));
+
+        btnAgregarNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/inventario/btnNuevo.png"))); // NOI18N
+        btnAgregarNuevo.setBorder(null);
+        btnAgregarNuevo.setBorderPainted(false);
+        btnAgregarNuevo.setContentAreaFilled(false);
+        btnAgregarNuevo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAgregarNuevo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAgregarNuevo.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/inventario/btnNuevo_press.png"))); // NOI18N
+        btnAgregarNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarNuevoActionPerformed(evt);
+            }
+        });
+        panelInventario.add(btnAgregarNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 260, 70, 60));
+
+        panelFiltrar.setBackground(new java.awt.Color(24, 24, 24));
+        panelFiltrar.setPreferredSize(new java.awt.Dimension(950, 150));
+        panelFiltrar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtFiltrarStock.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        txtFiltrarStock.setForeground(new java.awt.Color(255, 255, 255));
+        txtFiltrarStock.setBorder(null);
+        txtFiltrarStock.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtFiltrarStockKeyTyped(evt);
+            }
+        });
+        panelFiltrar.add(txtFiltrarStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 30, 140, 30));
+
+        separador8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        separador8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/modulos/Separador .png"))); // NOI18N
+        panelFiltrar.add(separador8, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 60, 140, 5));
+
+        jlbFiltrarStock.setFont(new java.awt.Font("Copperplate Gothic Bold", 0, 24)); // NOI18N
+        jlbFiltrarStock.setForeground(new java.awt.Color(255, 255, 255));
+        jlbFiltrarStock.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlbFiltrarStock.setText("Stock:");
+        panelFiltrar.add(jlbFiltrarStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 30, -1, -1));
+
+        txtFiltrarPrecio.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        txtFiltrarPrecio.setForeground(new java.awt.Color(255, 255, 255));
+        txtFiltrarPrecio.setBorder(null);
+        txtFiltrarPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtFiltrarPrecioKeyTyped(evt);
+            }
+        });
+        panelFiltrar.add(txtFiltrarPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 90, 140, 30));
+
+        separador9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        separador9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/modulos/Separador .png"))); // NOI18N
+        panelFiltrar.add(separador9, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, 140, 5));
+
+        jlbFiltrarPrecio.setFont(new java.awt.Font("Copperplate Gothic Bold", 0, 24)); // NOI18N
+        jlbFiltrarPrecio.setForeground(new java.awt.Color(255, 255, 255));
+        jlbFiltrarPrecio.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlbFiltrarPrecio.setText("Precio:");
+        panelFiltrar.add(jlbFiltrarPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 90, -1, -1));
 
         txtFiltrarCodigo.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         txtFiltrarCodigo.setForeground(new java.awt.Color(255, 255, 255));
@@ -97,11 +187,81 @@ public class frmInventario extends javax.swing.JFrame {
                 txtFiltrarCodigoKeyTyped(evt);
             }
         });
-        panelInventario.add(txtFiltrarCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, 170, 30));
+        panelFiltrar.add(txtFiltrarCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, 140, 30));
 
-        separador.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        separador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/modulos/Separador .png"))); // NOI18N
-        panelInventario.add(separador, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 170, 5));
+        separador10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        separador10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/modulos/Separador .png"))); // NOI18N
+        panelFiltrar.add(separador10, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 140, 5));
+
+        jlbFiltrarCodigo.setFont(new java.awt.Font("Copperplate Gothic Bold", 0, 24)); // NOI18N
+        jlbFiltrarCodigo.setForeground(new java.awt.Color(255, 255, 255));
+        jlbFiltrarCodigo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlbFiltrarCodigo.setText("Codigo:");
+        panelFiltrar.add(jlbFiltrarCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
+
+        txtFiltrarNombre.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        txtFiltrarNombre.setForeground(new java.awt.Color(255, 255, 255));
+        txtFiltrarNombre.setBorder(null);
+        txtFiltrarNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtFiltrarNombreKeyTyped(evt);
+            }
+        });
+        panelFiltrar.add(txtFiltrarNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, 140, 30));
+
+        separador11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        separador11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/modulos/Separador .png"))); // NOI18N
+        panelFiltrar.add(separador11, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 140, 5));
+
+        jlbFiltrarNombre.setFont(new java.awt.Font("Copperplate Gothic Bold", 0, 24)); // NOI18N
+        jlbFiltrarNombre.setForeground(new java.awt.Color(255, 255, 255));
+        jlbFiltrarNombre.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlbFiltrarNombre.setText("Nombre:");
+        panelFiltrar.add(jlbFiltrarNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
+
+        txtFiltrarMarca.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        txtFiltrarMarca.setForeground(new java.awt.Color(255, 255, 255));
+        txtFiltrarMarca.setBorder(null);
+        txtFiltrarMarca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtFiltrarMarcaKeyTyped(evt);
+            }
+        });
+        panelFiltrar.add(txtFiltrarMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 30, 140, 30));
+
+        separador12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        separador12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/modulos/Separador .png"))); // NOI18N
+        panelFiltrar.add(separador12, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 60, 140, 5));
+
+        jlbFiltrarMarca.setFont(new java.awt.Font("Copperplate Gothic Bold", 0, 24)); // NOI18N
+        jlbFiltrarMarca.setForeground(new java.awt.Color(255, 255, 255));
+        jlbFiltrarMarca.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlbFiltrarMarca.setText("Marca:");
+        panelFiltrar.add(jlbFiltrarMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 30, -1, -1));
+
+        txtFiltrarCategoria.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        txtFiltrarCategoria.setForeground(new java.awt.Color(255, 255, 255));
+        txtFiltrarCategoria.setBorder(null);
+        txtFiltrarCategoria.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtFiltrarCategoriaKeyTyped(evt);
+            }
+        });
+        panelFiltrar.add(txtFiltrarCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 90, 140, 30));
+
+        separador13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        separador13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/modulos/Separador .png"))); // NOI18N
+        panelFiltrar.add(separador13, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 120, 140, 5));
+
+        jlbFiltrarCategoria.setFont(new java.awt.Font("Copperplate Gothic Bold", 0, 18)); // NOI18N
+        jlbFiltrarCategoria.setForeground(new java.awt.Color(255, 255, 255));
+        jlbFiltrarCategoria.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlbFiltrarCategoria.setText("Categoria:");
+        panelFiltrar.add(jlbFiltrarCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 100, -1, -1));
+
+        jScrollPaneFiltrar.setViewportView(panelFiltrar);
+
+        panelInventario.add(jScrollPaneFiltrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 650, 160));
 
         btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/inventario/btnAtras.png"))); // NOI18N
         btnAtras.setBorder(null);
@@ -121,7 +281,7 @@ public class frmInventario extends javax.swing.JFrame {
         jlbTitulo.setForeground(new java.awt.Color(255, 255, 255));
         jlbTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbTitulo.setText("INVENTARIO");
-        panelInventario.add(jlbTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 70, -1, -1));
+        panelInventario.add(jlbTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 60, -1, -1));
 
         BarraTitulo.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -169,7 +329,7 @@ public class frmInventario extends javax.swing.JFrame {
             JTProductos.getColumnModel().getColumn(6).setPreferredWidth(100);
         }
 
-        panelInventario.add(jScrollPaneTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 780, 340));
+        panelInventario.add(jScrollPaneTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 780, 300));
 
         jlbDatos1.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
         jlbDatos1.setForeground(new java.awt.Color(255, 255, 255));
@@ -305,10 +465,15 @@ public class frmInventario extends javax.swing.JFrame {
 
         panelInventario.add(jScrollPaneDatos, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 350, 300, 270));
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/inventario/FondoDatos.png"))); // NOI18N
-        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        panelInventario.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 250, 380, 420));
+        fondoFiltros.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        fondoFiltros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/inventario/fondoFiltros.png"))); // NOI18N
+        fondoFiltros.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        panelInventario.add(fondoFiltros, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 740, 220));
+
+        fonoDatos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        fonoDatos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/inventario/FondoDatos.png"))); // NOI18N
+        fonoDatos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        panelInventario.add(fonoDatos, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 250, 380, 420));
 
         FONDO.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         FONDO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/inventario/FONDO.png"))); // NOI18N
@@ -319,10 +484,11 @@ public class frmInventario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TransparentarTxt(){
-        Proceso.transparentarTxtField(txtFiltrarCodigo);
+    private void TransparentarTxt() {
+        Proceso.transparentarTxtField(txtFiltrarCodigo, txtFiltrarCategoria,
+                txtFiltrarMarca, txtFiltrarNombre, txtFiltrarPrecio, txtFiltrarStock);
     }
-    
+
     int LayoutX;
     int LayoutY;
 
@@ -343,9 +509,45 @@ public class frmInventario extends javax.swing.JFrame {
         hide();
     }//GEN-LAST:event_btnAtrasActionPerformed
 
+    private void txtFiltrarStockKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltrarStockKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFiltrarStockKeyTyped
+
+    private void txtFiltrarPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltrarPrecioKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFiltrarPrecioKeyTyped
+
     private void txtFiltrarCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltrarCodigoKeyTyped
-        Proceso.limitacionNumeros(txtFiltrarCodigo, evt, 8);
+        // TODO add your handling code here:
     }//GEN-LAST:event_txtFiltrarCodigoKeyTyped
+
+    private void txtFiltrarNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltrarNombreKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFiltrarNombreKeyTyped
+
+    private void txtFiltrarMarcaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltrarMarcaKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFiltrarMarcaKeyTyped
+
+    private void txtFiltrarCategoriaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltrarCategoriaKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFiltrarCategoriaKeyTyped
+
+    private void btnAgregarNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarNuevoActionPerformed
+        NuevoProducto nuevo = new NuevoProducto();
+        nuevo.setVisible(true);
+    }//GEN-LAST:event_btnAgregarNuevoActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        if (ventanaNuevoProducto) {
+            JOptionPane.showMessageDialog(null, "Cierre la ventana de registro", "Mensage", JOptionPane.WARNING_MESSAGE);
+        } else {
+            frmInventario.ventanaNuevoProducto = false;
+            frm_Principal abrir = new frm_Principal();
+            abrir.setVisible(true);
+            hide();
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -378,32 +580,52 @@ public class frmInventario extends javax.swing.JFrame {
     private javax.swing.JLabel FONDO;
     private com.formato.UIDesing.TableDark JTProductos;
     private javax.swing.JLabel MarcoImagen;
-    private javax.swing.JButton btnAtras;
+    public static javax.swing.JButton btnAgregarNuevo;
+    public static javax.swing.JButton btnAtras;
+    private javax.swing.JButton btnFiltrar;
+    private javax.swing.JLabel fondoFiltros;
+    private javax.swing.JLabel fonoDatos;
     private javax.swing.JLabel imagenProducto;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPaneDatos;
+    private javax.swing.JScrollPane jScrollPaneFiltrar;
     private javax.swing.JScrollPane jScrollPaneTable;
     private javax.swing.JLabel jlbCategoria;
     private javax.swing.JLabel jlbCodigo;
     private javax.swing.JLabel jlbDatos1;
+    private javax.swing.JLabel jlbFiltrarCategoria;
     private javax.swing.JLabel jlbFiltrarCodigo;
+    private javax.swing.JLabel jlbFiltrarMarca;
+    private javax.swing.JLabel jlbFiltrarNombre;
+    private javax.swing.JLabel jlbFiltrarPrecio;
+    private javax.swing.JLabel jlbFiltrarStock;
     private javax.swing.JLabel jlbMarca;
     private javax.swing.JLabel jlbNombre;
     private javax.swing.JLabel jlbPrecio;
     private javax.swing.JLabel jlbStock;
     private javax.swing.JLabel jlbTitulo;
     private javax.swing.JPanel panelDatos;
+    private javax.swing.JPanel panelFiltrar;
     private javax.swing.JPanel panelInventario;
-    private javax.swing.JLabel separador;
     private javax.swing.JLabel separador1;
+    private javax.swing.JLabel separador10;
+    private javax.swing.JLabel separador11;
+    private javax.swing.JLabel separador12;
+    private javax.swing.JLabel separador13;
     private javax.swing.JLabel separador2;
     private javax.swing.JLabel separador3;
     private javax.swing.JLabel separador4;
     private javax.swing.JLabel separador5;
     private javax.swing.JLabel separador6;
+    private javax.swing.JLabel separador8;
+    private javax.swing.JLabel separador9;
     private javax.swing.JLabel txtCategoria;
     private javax.swing.JLabel txtCodigo;
+    private javax.swing.JTextField txtFiltrarCategoria;
     private javax.swing.JTextField txtFiltrarCodigo;
+    private javax.swing.JTextField txtFiltrarMarca;
+    private javax.swing.JTextField txtFiltrarNombre;
+    private javax.swing.JTextField txtFiltrarPrecio;
+    private javax.swing.JTextField txtFiltrarStock;
     private javax.swing.JLabel txtMarca;
     private javax.swing.JLabel txtNombre;
     private javax.swing.JLabel txtPrecio;

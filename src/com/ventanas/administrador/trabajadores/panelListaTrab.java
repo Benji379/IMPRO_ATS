@@ -16,7 +16,6 @@ import java.util.Map;
 import javax.swing.JScrollBar;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
-import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
 import scrollbar.ScrollBarCustom;
 
 /**
@@ -36,7 +35,7 @@ public class panelListaTrab extends javax.swing.JPanel {
         initComponents();
         setBackground(new Color(1.0f, 1.0f, 1.0f, 0.0f));
         TransparentarTxt();
-        AutocompletadoTxt();
+//        AutocompletadoTxt();
         jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
         ScrollBarCustom sp = new ScrollBarCustom();
         sp.setOrientation(JScrollBar.HORIZONTAL);
@@ -46,7 +45,7 @@ public class panelListaTrab extends javax.swing.JPanel {
         filtrarDatos.setupTableSorting(JTEmpleados);
     }
 
-    private void AutocompletadoTxt(){
+    private void AutocompletadoTxt() {
         AutoCompleteDecorator.decorate(txtDni, DatosTabla.cargarDatosList("trabajadores", "dni"), false);
         AutoCompleteDecorator.decorate(txtNombre, DatosTabla.cargarDatosList("trabajadores", "nombres"), false);
     }
@@ -277,15 +276,15 @@ public class panelListaTrab extends javax.swing.JPanel {
     }//GEN-LAST:event_btnFitlrarActionPerformed
 
     private void txtDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniKeyTyped
-//        Proceso.limitacionNumeros(txtDni, evt, 8);
+        Proceso.limitacionNumeros(txtDni, evt, 8);
     }//GEN-LAST:event_txtDniKeyTyped
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
-        Proceso.limitacionCaracteres(txtNombre, evt, 15);
+        Proceso.limitacionCaracteres(txtNombre, evt, 15, true);
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtGeneroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGeneroKeyTyped
-        Proceso.limitacionCaracteres(txtGenero, evt, 1);
+        Proceso.limitacionCaracteres(txtGenero, evt, 1, true);
     }//GEN-LAST:event_txtGeneroKeyTyped
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

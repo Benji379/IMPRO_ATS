@@ -299,7 +299,7 @@ public final class frm_Login extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsuarioKeyTyped
 
     private void txtContraseñaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraseñaKeyTyped
-        Proceso.limitacionCaracteres(txtContraseña, evt, 11);
+        Proceso.limitacionCaracteres(txtContraseña, evt, 11, false);
     }//GEN-LAST:event_txtContraseñaKeyTyped
 
     private void btnEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnterActionPerformed
