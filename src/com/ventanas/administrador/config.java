@@ -3,6 +3,8 @@ package com.ventanas.administrador;
 import com.formato.UIDesing.JScrollPaneUtils;
 import java.awt.Color;
 import com.formato.UIDesing.TableDark;
+import javax.swing.JScrollBar;
+import scrollbar.ScrollBarCustom;
 
 /**
  *
@@ -13,10 +15,14 @@ public class config extends javax.swing.JPanel {
     public config() {
         initComponents();
         setBackground(new Color(1.0f, 1.0f, 1.0f, 0.0f));
-        TableDark p = new TableDark();
-        p.fixTable(jScrollPane1);
-        JScrollPaneUtils.removeWhiteBorder(jScrollPane1);
+//        TableDark p = new TableDark();
+//        p.fixTable(jScrollPane1);
+//        JScrollPaneUtils.removeWhiteBorder(jScrollPane1);
 //        JListCustomization.customizeJList(jList1, 40, 3,1);
+        jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
+        ScrollBarCustom sp = new ScrollBarCustom();
+        sp.setOrientation(JScrollBar.HORIZONTAL);
+        jScrollPane1.setHorizontalScrollBar(sp);
     }
 
     @SuppressWarnings("unchecked")
@@ -27,6 +33,7 @@ public class config extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -45,14 +52,17 @@ public class config extends javax.swing.JPanel {
         jScrollPane1.setPreferredSize(new java.awt.Dimension(600, 600));
 
         jPanel2.setBackground(new java.awt.Color(24, 24, 24));
-        jPanel2.setPreferredSize(new java.awt.Dimension(300, 600));
+        jPanel2.setPreferredSize(new java.awt.Dimension(700, 600));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("HOLAAAAAAAAAA");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
 
         jLabel2.setText("HOLAAAAAAAAAA");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, -1, -1));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 130, -1, -1));
+
+        jLabel7.setText("HOLAAAAAAAAAA");
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, -1, -1));
 
         jScrollPane1.setViewportView(jPanel2);
 
@@ -110,6 +120,7 @@ public class config extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

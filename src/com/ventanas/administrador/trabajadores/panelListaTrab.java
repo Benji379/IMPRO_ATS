@@ -8,7 +8,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.swing.JScrollBar;
 import javax.swing.table.DefaultTableModel;
@@ -37,10 +39,12 @@ public class panelListaTrab extends javax.swing.JPanel {
         jScrollPane1.setHorizontalScrollBar(sp);
         consultar();
         Filtrar();
+        filtrarDatos.setupTableSorting(JTEmpleados);
     }
 
     private void Filtrar() {
-        filtrarDatos.filterAndPopulateTable("trabajadores", JTEmpleados, obtenerColumnFilters());
+        List<String> filteredColumns = Arrays.asList("id", "dni", "contraseña", "nombres", "apellidos", "edad", "genero", "correo", "codigo", "sede");
+        filtrarDatos.filterAndPopulateTable("trabajadores", JTEmpleados, obtenerColumnFilters(), filteredColumns);
     }
 
     private Map<String, String> obtenerColumnFilters() {
@@ -212,11 +216,11 @@ public class panelListaTrab extends javax.swing.JPanel {
 
             },
             new String [] {
-                "id", "dni", "Contraseña", "Nombres", "Apellidos", "Edad", "Genero", "Correo", "Cargo", "Codigo", "Sede"
+                "id", "dni", "Contraseña", "Nombres", "Apellidos", "Edad", "Genero", "Correo", "Codigo", "Sede"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -241,12 +245,10 @@ public class panelListaTrab extends javax.swing.JPanel {
             JTEmpleados.getColumnModel().getColumn(6).setPreferredWidth(50);
             JTEmpleados.getColumnModel().getColumn(7).setMinWidth(110);
             JTEmpleados.getColumnModel().getColumn(7).setPreferredWidth(110);
-            JTEmpleados.getColumnModel().getColumn(8).setMinWidth(100);
-            JTEmpleados.getColumnModel().getColumn(8).setPreferredWidth(100);
-            JTEmpleados.getColumnModel().getColumn(9).setMinWidth(90);
-            JTEmpleados.getColumnModel().getColumn(9).setPreferredWidth(90);
-            JTEmpleados.getColumnModel().getColumn(10).setMinWidth(50);
-            JTEmpleados.getColumnModel().getColumn(10).setPreferredWidth(50);
+            JTEmpleados.getColumnModel().getColumn(8).setMinWidth(90);
+            JTEmpleados.getColumnModel().getColumn(8).setPreferredWidth(90);
+            JTEmpleados.getColumnModel().getColumn(9).setMinWidth(50);
+            JTEmpleados.getColumnModel().getColumn(9).setPreferredWidth(50);
         }
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 900, 330));

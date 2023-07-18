@@ -67,7 +67,7 @@ public final class frm_Principal extends javax.swing.JFrame {
         contenedor.repaint();
         setTitle("IMRPO_ATS [Home]");
     }
-    
+
     public void fotoDePerfil() {
         String direccion = "/com/img/paneles/";
         if (rango.equalsIgnoreCase("Administrador")) {
@@ -329,6 +329,7 @@ public final class frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_BarraTituloMouseDragged
 
     private void BarraTituloMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BarraTituloMousePressed
+
         if (evt.getButton() == java.awt.event.MouseEvent.BUTTON1) {
             LayoutX = evt.getX();
             LayoutY = evt.getY();

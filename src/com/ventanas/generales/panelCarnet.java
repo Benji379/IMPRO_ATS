@@ -4,13 +4,13 @@ import com.formato.procesos.GeneradorQR;
 import com.formato.procesos.PrintPanel;
 import com.formato.procesos.Proceso;
 import com.dao.InnerJoin.daoLogin;
+import com.format.jnafilechooser.api.JnaFileChooser;
 import java.awt.Color;
 
 /**
  *
  * @author Benji
- */ 
-
+ */
 public class panelCarnet extends javax.swing.JPanel {
 
     String nombres = daoLogin.NOMBRE;
@@ -248,9 +248,26 @@ public class panelCarnet extends javax.swing.JPanel {
         add(FONDO, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 590));
     }// </editor-fold>//GEN-END:initComponents
 
+    private final String defaultFileName = "Carnet " + daoLogin.CODIGO; // Nombre por defecto
+
     private void logo_esloganMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logo_esloganMouseClicked
         if (evt.getClickCount() == 2) {
-            PrintPanel.capturePanel(carnet);
+            // Obtener el Window padre del JPanel
+            javax.swing.SwingUtilities.invokeLater(() -> {
+                java.awt.Window parentWindow = javax.swing.SwingUtilities.windowForComponent(carnet);
+                if (parentWindow != null) {
+                    JnaFileChooser jnaCh = new JnaFileChooser();
+                    jnaCh.setDefaultFileName(defaultFileName); // Establecer el nombre por defecto en el campo de texto
+                    boolean save = jnaCh.showOpenDialog(parentWindow);
+                    if (save) {
+                        String fileName = jnaCh.getSelectedFile().getName();
+                        if (fileName.isEmpty() || fileName.equals(defaultFileName)) {
+                            fileName = defaultFileName;
+                        }
+                        PrintPanel.capturePanel(carnet, jnaCh.getSelectedFile().getParentFile(), fileName);
+                    }
+                }
+            });
         }
     }//GEN-LAST:event_logo_esloganMouseClicked
 

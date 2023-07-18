@@ -67,7 +67,9 @@ public class ModernScrollBarUI extends BasicScrollBarUI {
             width = rctngl.width;
             height = size;
         }
-        g2.setColor(new Color(240, 240, 240));
+//        g2.setColor(new Color(240, 240, 240));
+        int col = 17;
+        g2.setColor(new Color(col, col, col));
         g2.fillRect(x, y, width, height);
     }
 
