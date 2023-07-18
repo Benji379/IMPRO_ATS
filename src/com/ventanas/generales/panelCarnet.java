@@ -61,7 +61,6 @@ public class panelCarnet extends javax.swing.JPanel {
                 }
             }
         }
-
     }
 
     @SuppressWarnings("unchecked")

@@ -1,6 +1,7 @@
 package com.ventanas.administrador.trabajadores;
 
 import com.dao.ConexionBd.ConexionSQL;
+import com.dao.InnerJoin.DatosTabla;
 import com.formato.procesos.Proceso;
 import com.formato.procesos.filtrarDatos;
 import java.awt.Color;
@@ -14,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JScrollBar;
 import javax.swing.table.DefaultTableModel;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
 import scrollbar.ScrollBarCustom;
 
 /**
@@ -33,6 +36,7 @@ public class panelListaTrab extends javax.swing.JPanel {
         initComponents();
         setBackground(new Color(1.0f, 1.0f, 1.0f, 0.0f));
         TransparentarTxt();
+        AutocompletadoTxt();
         jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
         ScrollBarCustom sp = new ScrollBarCustom();
         sp.setOrientation(JScrollBar.HORIZONTAL);
@@ -40,6 +44,11 @@ public class panelListaTrab extends javax.swing.JPanel {
         consultar();
         Filtrar();
         filtrarDatos.setupTableSorting(JTEmpleados);
+    }
+
+    private void AutocompletadoTxt(){
+        AutoCompleteDecorator.decorate(txtDni, DatosTabla.cargarDatosList("trabajadores", "dni"), false);
+        AutoCompleteDecorator.decorate(txtNombre, DatosTabla.cargarDatosList("trabajadores", "nombres"), false);
     }
 
     private void Filtrar() {
@@ -268,7 +277,7 @@ public class panelListaTrab extends javax.swing.JPanel {
     }//GEN-LAST:event_btnFitlrarActionPerformed
 
     private void txtDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniKeyTyped
-        Proceso.limitacionNumeros(txtDni, evt, 8);
+//        Proceso.limitacionNumeros(txtDni, evt, 8);
     }//GEN-LAST:event_txtDniKeyTyped
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped

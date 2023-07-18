@@ -3,6 +3,7 @@ package com.ventanas.administrador;
 import com.formato.UIDesing.JScrollPaneUtils;
 import com.formato.UIDesing.TableDark;
 import com.formato.procesos.ImageUtils;
+import com.formato.procesos.Proceso;
 import java.awt.Color;
 import java.awt.Toolkit;
 import javax.swing.JScrollBar;
@@ -21,6 +22,10 @@ public class frmInventario extends javax.swing.JFrame {
         panelInventario.setBackground(new Color(1.0f, 1.0f, 1.0f, 0.0f));
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/com/img/iconos/icon.png")));
         ImageUtils.setScaledImageFromUrl("https://s7d2.scene7.com/is/image/TottusPE/42756819_2?wid=240&hei=240&qlt=70&fmt=webp", imagenProducto);
+        JTableScrollBarCustom();
+    }
+
+    private void JTableScrollBarCustom() {
         TableDark p = new TableDark();
         p.fixTable(jScrollPaneDatos);
         JScrollPaneUtils.removeWhiteBorder(jScrollPaneDatos);
@@ -30,12 +35,14 @@ public class frmInventario extends javax.swing.JFrame {
         jScrollPaneDatos.setHorizontalScrollBar(sp);
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         panelInventario = new javax.swing.JPanel();
+        jlbFiltrarCodigo = new javax.swing.JLabel();
+        txtFiltrarCodigo = new javax.swing.JTextField();
+        separador = new javax.swing.JLabel();
         btnAtras = new javax.swing.JButton();
         jlbTitulo = new javax.swing.JLabel();
         BarraTitulo = new javax.swing.JLabel();
@@ -48,21 +55,21 @@ public class frmInventario extends javax.swing.JFrame {
         panelDatos = new javax.swing.JPanel();
         txtCodigo = new javax.swing.JLabel();
         jlbCodigo = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JLabel();
+        jlbNombre = new javax.swing.JLabel();
         txtStock = new javax.swing.JLabel();
         jlbStock = new javax.swing.JLabel();
-        txtPrecio = new javax.swing.JLabel();
-        jlbPrecio = new javax.swing.JLabel();
         txtCategoria = new javax.swing.JLabel();
         jlbCategoria = new javax.swing.JLabel();
+        txtPrecio = new javax.swing.JLabel();
+        jlbPrecio = new javax.swing.JLabel();
         txtMarca = new javax.swing.JLabel();
         jlbMarca = new javax.swing.JLabel();
-        txtUrlImg = new javax.swing.JLabel();
-        jlbUrlImg = new javax.swing.JLabel();
+        separador5 = new javax.swing.JLabel();
         separador1 = new javax.swing.JLabel();
         separador2 = new javax.swing.JLabel();
         separador3 = new javax.swing.JLabel();
         separador4 = new javax.swing.JLabel();
-        separador5 = new javax.swing.JLabel();
         separador6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         FONDO = new javax.swing.JLabel();
@@ -75,6 +82,26 @@ public class frmInventario extends javax.swing.JFrame {
 
         panelInventario.setBackground(new java.awt.Color(24, 24, 24));
         panelInventario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jlbFiltrarCodigo.setFont(new java.awt.Font("Copperplate Gothic Bold", 0, 24)); // NOI18N
+        jlbFiltrarCodigo.setForeground(new java.awt.Color(255, 255, 255));
+        jlbFiltrarCodigo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlbFiltrarCodigo.setText("Codigo:");
+        panelInventario.add(jlbFiltrarCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
+
+        txtFiltrarCodigo.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        txtFiltrarCodigo.setForeground(new java.awt.Color(255, 255, 255));
+        txtFiltrarCodigo.setBorder(null);
+        txtFiltrarCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtFiltrarCodigoKeyTyped(evt);
+            }
+        });
+        panelInventario.add(txtFiltrarCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, 170, 30));
+
+        separador.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        separador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/modulos/Separador .png"))); // NOI18N
+        panelInventario.add(separador, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 170, 5));
 
         btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/inventario/btnAtras.png"))); // NOI18N
         btnAtras.setBorder(null);
@@ -126,11 +153,11 @@ public class frmInventario extends javax.swing.JFrame {
 
             },
             new String [] {
-                "id", "Codigo", "Nombre", "Stock", "Precio", "Categoria", "urlImagen"
+                "id", "Codigo", "Nombre", "Stock", "Precio", "Marca", "Categoria"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -139,7 +166,6 @@ public class frmInventario extends javax.swing.JFrame {
         });
         jScrollPaneTable.setViewportView(JTProductos);
         if (JTProductos.getColumnModel().getColumnCount() > 0) {
-            JTProductos.getColumnModel().getColumn(5).setPreferredWidth(100);
             JTProductos.getColumnModel().getColumn(6).setPreferredWidth(100);
         }
 
@@ -168,70 +194,77 @@ public class frmInventario extends javax.swing.JFrame {
         jlbCodigo.setText("Código:");
         panelDatos.add(jlbCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 90, 30));
 
+        txtNombre.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
+        txtNombre.setForeground(new java.awt.Color(255, 255, 255));
+        txtNombre.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        txtNombre.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        txtNombre.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        panelDatos.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 150, 30));
+
+        jlbNombre.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
+        jlbNombre.setForeground(new java.awt.Color(255, 255, 255));
+        jlbNombre.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlbNombre.setText("nombre:");
+        panelDatos.add(jlbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 110, 30));
+
         txtStock.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
         txtStock.setForeground(new java.awt.Color(255, 255, 255));
         txtStock.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         txtStock.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         txtStock.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        panelDatos.add(txtStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 150, 30));
+        panelDatos.add(txtStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, 150, 30));
 
         jlbStock.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
         jlbStock.setForeground(new java.awt.Color(255, 255, 255));
         jlbStock.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jlbStock.setText("Stock:");
-        panelDatos.add(jlbStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 90, 30));
-
-        txtPrecio.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
-        txtPrecio.setForeground(new java.awt.Color(255, 255, 255));
-        txtPrecio.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        txtPrecio.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        txtPrecio.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        panelDatos.add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, 150, 30));
-
-        jlbPrecio.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
-        jlbPrecio.setForeground(new java.awt.Color(255, 255, 255));
-        jlbPrecio.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jlbPrecio.setText("Precio:");
-        panelDatos.add(jlbPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 90, 30));
+        panelDatos.add(jlbStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 90, 30));
 
         txtCategoria.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
         txtCategoria.setForeground(new java.awt.Color(255, 255, 255));
         txtCategoria.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         txtCategoria.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         txtCategoria.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        panelDatos.add(txtCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, 150, 30));
+        panelDatos.add(txtCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 230, 150, 30));
 
         jlbCategoria.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
         jlbCategoria.setForeground(new java.awt.Color(255, 255, 255));
         jlbCategoria.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jlbCategoria.setText("Categoría:");
-        panelDatos.add(jlbCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 110, 30));
+        panelDatos.add(jlbCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 110, 30));
+
+        txtPrecio.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
+        txtPrecio.setForeground(new java.awt.Color(255, 255, 255));
+        txtPrecio.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        txtPrecio.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        txtPrecio.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        panelDatos.add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, 150, 30));
+
+        jlbPrecio.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
+        jlbPrecio.setForeground(new java.awt.Color(255, 255, 255));
+        jlbPrecio.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlbPrecio.setText("Precio:");
+        panelDatos.add(jlbPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 90, 30));
 
         txtMarca.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
         txtMarca.setForeground(new java.awt.Color(255, 255, 255));
         txtMarca.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         txtMarca.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         txtMarca.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        panelDatos.add(txtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 230, 150, 30));
+        panelDatos.add(txtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 280, 150, 30));
 
         jlbMarca.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
         jlbMarca.setForeground(new java.awt.Color(255, 255, 255));
         jlbMarca.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jlbMarca.setText("Marca:");
-        panelDatos.add(jlbMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 110, 30));
+        panelDatos.add(jlbMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 110, 30));
 
-        txtUrlImg.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
-        txtUrlImg.setForeground(new java.awt.Color(255, 255, 255));
-        txtUrlImg.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        txtUrlImg.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        txtUrlImg.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        panelDatos.add(txtUrlImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 280, 150, 30));
-
-        jlbUrlImg.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
-        jlbUrlImg.setForeground(new java.awt.Color(255, 255, 255));
-        jlbUrlImg.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jlbUrlImg.setText("url-Imagen");
-        panelDatos.add(jlbUrlImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 110, 30));
+        separador5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        separador5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/modulos/Separador .png"))); // NOI18N
+        separador5.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        separador5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        separador5.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        panelDatos.add(separador5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 310, 150, 10));
 
         separador1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         separador1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/modulos/Separador .png"))); // NOI18N
@@ -261,13 +294,6 @@ public class frmInventario extends javax.swing.JFrame {
         separador4.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         panelDatos.add(separador4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 260, 150, 10));
 
-        separador5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        separador5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/modulos/Separador .png"))); // NOI18N
-        separador5.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        separador5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        separador5.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        panelDatos.add(separador5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 310, 150, 10));
-
         separador6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         separador6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/modulos/Separador .png"))); // NOI18N
         separador6.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -293,9 +319,13 @@ public class frmInventario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void TransparentarTxt(){
+        Proceso.transparentarTxtField(txtFiltrarCodigo);
+    }
+    
     int LayoutX;
     int LayoutY;
-    
+
     private void BarraTituloMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BarraTituloMouseDragged
         this.setLocation(evt.getXOnScreen() - LayoutX, evt.getYOnScreen() - LayoutY);
     }//GEN-LAST:event_BarraTituloMouseDragged
@@ -312,6 +342,10 @@ public class frmInventario extends javax.swing.JFrame {
         abrir.setVisible(true);
         hide();
     }//GEN-LAST:event_btnAtrasActionPerformed
+
+    private void txtFiltrarCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltrarCodigoKeyTyped
+        Proceso.limitacionNumeros(txtFiltrarCodigo, evt, 8);
+    }//GEN-LAST:event_txtFiltrarCodigoKeyTyped
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -352,13 +386,15 @@ public class frmInventario extends javax.swing.JFrame {
     private javax.swing.JLabel jlbCategoria;
     private javax.swing.JLabel jlbCodigo;
     private javax.swing.JLabel jlbDatos1;
+    private javax.swing.JLabel jlbFiltrarCodigo;
     private javax.swing.JLabel jlbMarca;
+    private javax.swing.JLabel jlbNombre;
     private javax.swing.JLabel jlbPrecio;
     private javax.swing.JLabel jlbStock;
     private javax.swing.JLabel jlbTitulo;
-    private javax.swing.JLabel jlbUrlImg;
     private javax.swing.JPanel panelDatos;
     private javax.swing.JPanel panelInventario;
+    private javax.swing.JLabel separador;
     private javax.swing.JLabel separador1;
     private javax.swing.JLabel separador2;
     private javax.swing.JLabel separador3;
@@ -367,9 +403,10 @@ public class frmInventario extends javax.swing.JFrame {
     private javax.swing.JLabel separador6;
     private javax.swing.JLabel txtCategoria;
     private javax.swing.JLabel txtCodigo;
+    private javax.swing.JTextField txtFiltrarCodigo;
     private javax.swing.JLabel txtMarca;
+    private javax.swing.JLabel txtNombre;
     private javax.swing.JLabel txtPrecio;
     private javax.swing.JLabel txtStock;
-    private javax.swing.JLabel txtUrlImg;
     // End of variables declaration//GEN-END:variables
 }
