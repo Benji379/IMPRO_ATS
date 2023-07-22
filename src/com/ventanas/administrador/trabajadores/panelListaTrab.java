@@ -1,6 +1,7 @@
 package com.ventanas.administrador.trabajadores;
 
 import com.dao.ConexionBd.ConexionSQL;
+import com.dao.InnerJoin.CrudJTable;
 import com.dao.InnerJoin.DatosTabla;
 import com.formato.procesos.Proceso;
 import com.formato.procesos.filtrarDatos;
@@ -30,12 +31,16 @@ public class panelListaTrab extends javax.swing.JPanel {
     Statement st;
     ResultSet rs;
     int idc;
+    CrudJTable crud = new CrudJTable();
 
     public panelListaTrab() {
         initComponents();
+        DiseñoInicial();
+    }
+
+    private void DiseñoInicial() {
         setBackground(new Color(1.0f, 1.0f, 1.0f, 0.0f));
         TransparentarTxt();
-//        AutocompletadoTxt();
         jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
         ScrollBarCustom sp = new ScrollBarCustom();
         sp.setOrientation(JScrollBar.HORIZONTAL);
@@ -44,11 +49,11 @@ public class panelListaTrab extends javax.swing.JPanel {
         Filtrar();
         filtrarDatos.setupTableSorting(JTEmpleados);
     }
-
-    private void AutocompletadoTxt() {
-        AutoCompleteDecorator.decorate(txtDni, DatosTabla.cargarDatosList("trabajadores", "dni"), false);
-        AutoCompleteDecorator.decorate(txtNombre, DatosTabla.cargarDatosList("trabajadores", "nombres"), false);
-    }
+    
+//    private void AutocompletadoTxt() {
+//        AutoCompleteDecorator.decorate(txtDni, DatosTabla.cargarDatosList("trabajadores", "dni"), false);
+//        AutoCompleteDecorator.decorate(txtNombre, DatosTabla.cargarDatosList("trabajadores", "nombres"), false);
+//    }
 
     private void Filtrar() {
         List<String> filteredColumns = Arrays.asList("id", "dni", "contraseña", "nombres", "apellidos", "edad", "genero", "correo", "codigo", "sede");
@@ -65,31 +70,24 @@ public class panelListaTrab extends javax.swing.JPanel {
     }
 
     private void consultar() {
-        String sql = "select * from trabajadores";
-        try {
-            conet = con1.conexion();
-            st = conet.createStatement();
-            rs = st.executeQuery(sql);
-            Object[] cliente = new Object[11];
-            modelo = (DefaultTableModel) JTEmpleados.getModel();
-            while (rs.next()) {
-                cliente[0] = rs.getInt("id");
-                cliente[1] = rs.getString("dni");
-                cliente[2] = rs.getString("contraseña");
-                cliente[3] = rs.getString("nombres");
-                cliente[4] = rs.getString("apellidos");
-                cliente[5] = rs.getString("edad");
-                cliente[6] = rs.getString("genero");
-                cliente[7] = rs.getString("correo");
-                cliente[8] = rs.getString("cargo");
-                cliente[9] = rs.getString("Codigo");
-                cliente[10] = rs.getString("sede");
-                modelo.addRow(cliente);
-            }
-            JTEmpleados.setModel(modelo);
-        } catch (SQLException e) {
-            System.out.println("ERROR: " + e.getMessage());
-        }
+        crud.consultarTabla("trabajadores", asignarColumnasTabla(), JTEmpleados);
+    }
+
+    private Map<String, Integer> asignarColumnasTabla() {
+        Map<String, Integer> columnas = new HashMap<>();
+
+        columnas.put("id", 0);
+        columnas.put("dni", 1);
+        columnas.put("contraseña", 2);
+        columnas.put("nombres", 3);
+        columnas.put("apellidos", 4);
+        columnas.put("edad", 5);
+        columnas.put("genero", 6);
+        columnas.put("correo", 7);
+        columnas.put("codigo", 8);
+        columnas.put("sede", 9);
+
+        return columnas;
     }
 
     private void TransparentarTxt() {

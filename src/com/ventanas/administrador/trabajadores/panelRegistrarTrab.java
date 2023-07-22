@@ -355,59 +355,63 @@ public class panelRegistrarTrab extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGenerarCodigoActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        try {
+            String dni = txtDni.getText();
+            String contraseña = txtContraseña.getText();
+            String nombres = txtNombres.getText();
+            String apellidos = txtApellidos.getText();
+            String edad = txtEdad.getText();
+            String genero = (String) comboGenero.getSelectedItem();
+            String correo = txtCorreo.getText();
+            String cargo = "Trabajador";
+            String codigo = txtCodigo.getText();
+            String sede = (String) comboSede.getSelectedItem();
+            String puerto = txtPuerto.getText();
+            String contraseña2 = txtContraseña2.getText();
 
-        String dni = txtDni.getText();
-        String contraseña = txtContraseña.getText();
-        String nombres = txtNombres.getText();
-        String apellidos = txtApellidos.getText();
-        String edad = txtEdad.getText();
-        String genero = (String) comboGenero.getSelectedItem();
-        String correo = txtCorreo.getText();
-        String cargo = "Trabajador";
-        String codigo = txtCodigo.getText();
-        String sede = (String) comboSede.getSelectedItem();
-        String puerto = txtPuerto.getText();
-        String contraseña2 = txtContraseña2.getText();
+            //VERIFICACIONES DE VALIDACION
+            boolean v1 = false, v2 = false, v3 = false, v4 = false;
 
-        //VERIFICACIONES DE VALIDACION
-        boolean v1 = false, v2 = false, v3 = false, v4 = false;
+            boolean trabajadorExistente = ConsultasSQL.encontrarValor("trabajadores", "dni", dni);
+            boolean valoresVacios = Proceso.hayValorVacio(dni, contraseña, nombres, apellidos, edad, genero, correo, cargo, codigo, sede, puerto);
+            boolean contraseñaValida = contraseña.equals(contraseña2);
+            boolean correoValido = Proceso.validarCorreo(correo);
 
-        boolean trabajadorExistente = ConsultasSQL.encontrarValor("trabajadores", "dni", dni);
-        boolean valoresVacios = Proceso.hayValorVacio(dni, contraseña, nombres, apellidos, edad, genero, correo, cargo, codigo, sede, puerto);
-        boolean contraseñaValida = contraseña.equals(contraseña2);
-        boolean correoValido = Proceso.validarCorreo(correo);
-
-        if (valoresVacios == true) {
-            JOptionPane.showMessageDialog(null, "Rellene todos los valores", "Error", JOptionPane.ERROR_MESSAGE);
-        } else {
-            v1 = true;
-            if (trabajadorExistente == true) {
-                JOptionPane.showMessageDialog(null, "Trabajador existente", "Error", JOptionPane.ERROR_MESSAGE);
+            if (valoresVacios == true) {
+                JOptionPane.showMessageDialog(null, "Rellene todos los valores", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                v2 = true;
-                if (contraseñaValida == false) {
-                    JOptionPane.showMessageDialog(null, "Repita la contraseña", "Error", JOptionPane.ERROR_MESSAGE);
+                v1 = true;
+                if (trabajadorExistente == true) {
+                    JOptionPane.showMessageDialog(null, "Trabajador existente", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    v3 = true;
-                    if (correoValido == false) {
-                        JOptionPane.showMessageDialog(null, "Ingrese un correo Válido", "Error", JOptionPane.ERROR_MESSAGE);
+                    v2 = true;
+                    if (contraseñaValida == false) {
+                        JOptionPane.showMessageDialog(null, "Repita la contraseña", "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
-                        v4 = true;
+                        v3 = true;
+                        if (correoValido == false) {
+                            JOptionPane.showMessageDialog(null, "Ingrese un correo Válido", "Error", JOptionPane.ERROR_MESSAGE);
+                        } else {
+                            v4 = true;
+                        }
                     }
                 }
             }
+
+            if (Integer.parseInt(edad) >= 18) {
+                if (v1 == true && v2 == true && v3 == true && v4 == true) {
+                    ConsultasSQL.insertarDatos("trabajadores", dni, contraseña, nombres,
+                            apellidos, edad, genero, correo, cargo, codigo, sede, puerto);
+                    NuevoRegistro();
+                    JOptionPane.showMessageDialog(null, "A sido Registrado exitosamente", "Registro", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "ERROR: Edad menor a 18", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            
         }
 
-        if (Integer.parseInt(edad) >= 18) {
-            if (v1 == true && v2 == true && v3 == true && v4 == true) {
-                ConsultasSQL.insertarDatos("trabajadores", dni, contraseña, nombres,
-                        apellidos, edad, genero, correo, cargo, codigo, sede, puerto);
-                NuevoRegistro();
-                JOptionPane.showMessageDialog(null, "A sido Registrado exitosamente", "Registro", JOptionPane.INFORMATION_MESSAGE);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "ERROR: Edad menor a 18", "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void txtDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniKeyTyped

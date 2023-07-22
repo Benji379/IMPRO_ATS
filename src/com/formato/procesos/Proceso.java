@@ -73,6 +73,15 @@ public class Proceso {
         }
     }
 
+    public static void limitacionEspacio(JTextField txtField, KeyEvent evt) {
+        int key = evt.getKeyChar();
+        boolean espacio = key == KeyEvent.VK_SPACE;
+
+        if (espacio) {
+            evt.consume();
+        }
+    }
+
     public static void limitacionNumeros(JTextField txtField, KeyEvent evt, int CantNumeros) {
         int key = evt.getKeyChar();
         boolean numeros = key >= 48 && key <= 57;
@@ -84,6 +93,53 @@ public class Proceso {
                 evt.consume();
             }
         }
+    }
+
+    public static void limitacionNumeros(JTextField txtField, KeyEvent evt, int CantNumeros, String caracterAdicionalPermitir) {
+        int key = evt.getKeyChar();
+        boolean numeros = (key >= 48 && key <= 57) || key == 46; // Permitir números y el punto (.)
+        boolean espacio = key == KeyEvent.VK_SPACE;
+
+        String text = txtField.getText();
+        boolean tienePunto = text.contains(caracterAdicionalPermitir);
+
+        if (!numeros || (tienePunto && key == 46) || espacio) {
+            evt.consume();
+        } else {
+            if (text.length() >= CantNumeros) {
+                evt.consume();
+            }
+        }
+    }
+
+    public static void limitacionNumerosDecimales(JTextField txtField, KeyEvent evt, int CantNumeros) {
+        char key = evt.getKeyChar();
+        String text = txtField.getText();
+        boolean tienePunto = text.contains(".");
+
+        if (!Character.isDigit(key) && key != '.' || (tienePunto && key == '.') || (key == '.' && text.indexOf('.') != text.lastIndexOf('.'))) {
+            evt.consume();
+        } else {
+            if (text.length() >= CantNumeros) {
+                evt.consume();
+            }
+        }
+    }
+
+    public static boolean validacionDeDecimal(JTextField txtField) {
+        String text = txtField.getText();
+        int countDots = 0;
+
+        for (int i = 0; i < text.length(); i++) {
+            if (text.charAt(i) == '.') {
+                countDots++;
+            }
+            if (countDots > 1) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public static void FechaActual(JLabel txtLabel) {
@@ -151,6 +207,11 @@ public class Proceso {
 
     public static void vaciarTxt(JTextField... txt) {
         for (JTextField text : txt) {
+            text.setText("");
+        }
+    }
+    public static void vaciarTxt(JLabel... txt) {
+        for (JLabel text : txt) {
             text.setText("");
         }
     }

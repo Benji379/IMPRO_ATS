@@ -368,9 +368,13 @@ public final class frm_Login extends javax.swing.JFrame {
         boolean valido = false;
         String sede = daoLogin.consultarRango("trabajadores", "dni", txtUsuario.getText(), "sede");
         String cargo = daoLogin.consultarRango("trabajadores", "dni", txtUsuario.getText(), "cargo");
-
+        String estadoSede = daoLogin.consultarRango("sedes", "sede", Data.getSede(), "estado");
         if (sede.equals(Data.getSede()) || cargo.equalsIgnoreCase("Administrador")) {
-            valido = true;
+            if (estadoSede.equalsIgnoreCase("Activo") || cargo.equalsIgnoreCase("Administrador")) {
+                valido = true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Sede fuera de servicio", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Usuario no pertenece a la sede", "Error", JOptionPane.ERROR_MESSAGE);
         }

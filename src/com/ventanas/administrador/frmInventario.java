@@ -1,11 +1,19 @@
 package com.ventanas.administrador;
 
+import com.dao.InnerJoin.CrudJTable;
+import com.dao.InnerJoin.daoLogin;
 import com.formato.UIDesing.JScrollPaneUtils;
 import com.formato.procesos.ImageUtils;
 import com.formato.procesos.Proceso;
+import com.formato.procesos.filtrarDatos;
 import com.ventanas.administrador.trabajadores.NuevoProducto;
 import java.awt.Color;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -15,20 +23,72 @@ import scrollbar.ScrollBarCustom;
  *
  * @author Benji
  */
-public class frmInventario extends javax.swing.JFrame {
+public final class frmInventario extends javax.swing.JFrame {
 
     public static boolean ventanaNuevoProducto = false;
+    private final String nameTablaInventario = daoLogin.NOMBRE_TABLA_SEDE;
+    CrudJTable crud = new CrudJTable();
 
     public frmInventario() {
         initComponents();
         this.setLocationRelativeTo(null);
+        DiseñoInicial();
+        System.out.println("NOMBRE TABLA: " + nameTablaInventario);
+        Consultar();
+    }
+
+    private void DiseñoInicial() {
         setBackground(new Color(1.0f, 1.0f, 1.0f, 0.0f));
         panelInventario.setBackground(new Color(1.0f, 1.0f, 1.0f, 0.0f));
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/com/img/iconos/inventario.png")));
-        ImageUtils.setScaledImageFromUrl("https://s7d2.scene7.com/is/image/TottusPE/42756819_2?wid=240&hei=240&qlt=70&fmt=webp", imagenProducto);
         JTableScrollBarCustom(jScrollPaneDatos);
         JTableScrollBarCustom(jScrollPaneFiltrar);
         TransparentarTxt();
+        filtrarDatos.setupTableSorting(JTProductos);
+    }
+
+    public void Consultar() {
+        crud.consultarTabla(nameTablaInventario, asignarColumnasTabla(), JTProductos);
+    }
+
+    private Map<String, Integer> asignarColumnasTabla() {
+        Map<String, Integer> columnas = new HashMap<>();
+
+        columnas.put("id", 0);
+        columnas.put("codigo", 1);
+        columnas.put("nombre", 2);
+        columnas.put("stock", 3);
+        columnas.put("precio", 4);
+        columnas.put("categoria", 5);
+        columnas.put("marca", 6);
+
+        return columnas;
+    }
+
+    public void VaciarTextLabelDatos() {
+        Proceso.vaciarTxt(txtCategoria, txtCodigo, txtMarca, txtNombre, txtPrecio, txtStock);
+        imagenProducto.setIcon(null);
+    }
+
+    public void VaciarCamposFiltros() {
+        Proceso.vaciarTxt(txtFiltrarCategoria, txtFiltrarCodigo, txtFiltrarMarca, txtFiltrarNombre, txtFiltrarPrecio, txtFiltrarStock);
+        Filtrar();
+    }
+
+    public void Filtrar() {
+        List<String> filteredColumns = Arrays.asList("id", "codigo", "nombre", "stock", "precio", "categoria", "marca");
+        filtrarDatos.filterAndPopulateTable(nameTablaInventario, JTProductos, obtenerColumnFilters(), filteredColumns);
+    }
+
+    private Map<String, String> obtenerColumnFilters() {
+        Map<String, String> columnFilters = new HashMap<>();
+        columnFilters.put("codigo", txtFiltrarCodigo.getText());
+        columnFilters.put("nombre", txtFiltrarNombre.getText());
+        columnFilters.put("stock", txtFiltrarStock.getText());
+        columnFilters.put("precio", txtFiltrarPrecio.getText());
+        columnFilters.put("categoria", txtFiltrarCategoria.getText());
+        columnFilters.put("marca", txtFiltrarMarca.getText());
+        return columnFilters;
     }
 
     private void JTableScrollBarCustom(JScrollPane scrollPane) {
@@ -44,7 +104,7 @@ public class frmInventario extends javax.swing.JFrame {
     private void initComponents() {
 
         panelInventario = new javax.swing.JPanel();
-        btnFiltrar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
         btnAgregarNuevo = new javax.swing.JButton();
         jScrollPaneFiltrar = new javax.swing.JScrollPane();
         panelFiltrar = new javax.swing.JPanel();
@@ -112,14 +172,19 @@ public class frmInventario extends javax.swing.JFrame {
         panelInventario.setBackground(new java.awt.Color(24, 24, 24));
         panelInventario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnFiltrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/modulos/btnFiltrar.png"))); // NOI18N
-        btnFiltrar.setBorder(null);
-        btnFiltrar.setBorderPainted(false);
-        btnFiltrar.setContentAreaFilled(false);
-        btnFiltrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnFiltrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnFiltrar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/modulos/btnFiltrar_press.png"))); // NOI18N
-        panelInventario.add(btnFiltrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 170, 70, 60));
+        btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/inventario/btnLimpiar.png"))); // NOI18N
+        btnLimpiar.setBorder(null);
+        btnLimpiar.setBorderPainted(false);
+        btnLimpiar.setContentAreaFilled(false);
+        btnLimpiar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLimpiar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnLimpiar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/inventario/btnLimpiar_press.png"))); // NOI18N
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+        panelInventario.add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 170, 70, 60));
 
         btnAgregarNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/inventario/btnNuevo.png"))); // NOI18N
         btnAgregarNuevo.setBorder(null);
@@ -143,6 +208,9 @@ public class frmInventario extends javax.swing.JFrame {
         txtFiltrarStock.setForeground(new java.awt.Color(255, 255, 255));
         txtFiltrarStock.setBorder(null);
         txtFiltrarStock.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFiltrarStockKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtFiltrarStockKeyTyped(evt);
             }
@@ -163,6 +231,9 @@ public class frmInventario extends javax.swing.JFrame {
         txtFiltrarPrecio.setForeground(new java.awt.Color(255, 255, 255));
         txtFiltrarPrecio.setBorder(null);
         txtFiltrarPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFiltrarPrecioKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtFiltrarPrecioKeyTyped(evt);
             }
@@ -183,6 +254,9 @@ public class frmInventario extends javax.swing.JFrame {
         txtFiltrarCodigo.setForeground(new java.awt.Color(255, 255, 255));
         txtFiltrarCodigo.setBorder(null);
         txtFiltrarCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFiltrarCodigoKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtFiltrarCodigoKeyTyped(evt);
             }
@@ -203,6 +277,9 @@ public class frmInventario extends javax.swing.JFrame {
         txtFiltrarNombre.setForeground(new java.awt.Color(255, 255, 255));
         txtFiltrarNombre.setBorder(null);
         txtFiltrarNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFiltrarNombreKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtFiltrarNombreKeyTyped(evt);
             }
@@ -223,6 +300,9 @@ public class frmInventario extends javax.swing.JFrame {
         txtFiltrarMarca.setForeground(new java.awt.Color(255, 255, 255));
         txtFiltrarMarca.setBorder(null);
         txtFiltrarMarca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFiltrarMarcaKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtFiltrarMarcaKeyTyped(evt);
             }
@@ -243,6 +323,9 @@ public class frmInventario extends javax.swing.JFrame {
         txtFiltrarCategoria.setForeground(new java.awt.Color(255, 255, 255));
         txtFiltrarCategoria.setBorder(null);
         txtFiltrarCategoria.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFiltrarCategoriaKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtFiltrarCategoriaKeyTyped(evt);
             }
@@ -322,6 +405,11 @@ public class frmInventario extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        JTProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JTProductosMouseClicked(evt);
             }
         });
         jScrollPaneTable.setViewportView(JTProductos);
@@ -549,6 +637,65 @@ public class frmInventario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowClosing
 
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        VaciarTextLabelDatos();
+        VaciarCamposFiltros();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void txtFiltrarCodigoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltrarCodigoKeyReleased
+        Filtrar();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            MostrarDatos("codigo", txtFiltrarCodigo.getText());
+        }
+    }//GEN-LAST:event_txtFiltrarCodigoKeyReleased
+
+    private void MostrarDatos(String columna, String valor) {
+        try {
+            String codigo = daoLogin.consultarRango(nameTablaInventario, columna, valor, "codigo");
+            String nombre = daoLogin.consultarRango(nameTablaInventario, columna, valor, "nombre");
+            String stock = daoLogin.consultarRango(nameTablaInventario, columna, valor, "stock");
+            String precio = daoLogin.consultarRango(nameTablaInventario, columna, valor, "precio");
+            String marca = daoLogin.consultarRango(nameTablaInventario, columna, valor, "marca");
+            String categoria = daoLogin.consultarRango(nameTablaInventario, columna, valor, "categoria");
+            String url = daoLogin.consultarRango(nameTablaInventario, columna, valor, "urlImagen");
+            txtCodigo.setText(codigo);
+            txtNombre.setText(nombre);
+            txtPrecio.setText(precio);
+            txtMarca.setText(marca);
+            txtStock.setText(stock);
+            txtCategoria.setText(categoria);
+            ImageUtils.setScaledImageFromUrl(url, imagenProducto);
+        } catch (Exception e) {
+        }
+
+    }
+    private void txtFiltrarNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltrarNombreKeyReleased
+        Filtrar();
+    }//GEN-LAST:event_txtFiltrarNombreKeyReleased
+
+    private void txtFiltrarStockKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltrarStockKeyReleased
+        Filtrar();
+    }//GEN-LAST:event_txtFiltrarStockKeyReleased
+
+    private void txtFiltrarPrecioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltrarPrecioKeyReleased
+        Filtrar();
+    }//GEN-LAST:event_txtFiltrarPrecioKeyReleased
+
+    private void txtFiltrarMarcaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltrarMarcaKeyReleased
+        Filtrar();
+    }//GEN-LAST:event_txtFiltrarMarcaKeyReleased
+
+    private void txtFiltrarCategoriaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltrarCategoriaKeyReleased
+        Filtrar();
+    }//GEN-LAST:event_txtFiltrarCategoriaKeyReleased
+
+    private void JTProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTProductosMouseClicked
+        int fila = JTProductos.getSelectedRow();
+        if (evt.getClickCount() == 2) {
+            MostrarDatos("id", String.valueOf(Integer.parseInt((String) JTProductos.getValueAt(fila, 0).toString())));
+        }
+    }//GEN-LAST:event_JTProductosMouseClicked
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -582,7 +729,7 @@ public class frmInventario extends javax.swing.JFrame {
     private javax.swing.JLabel MarcoImagen;
     public static javax.swing.JButton btnAgregarNuevo;
     public static javax.swing.JButton btnAtras;
-    private javax.swing.JButton btnFiltrar;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JLabel fondoFiltros;
     private javax.swing.JLabel fonoDatos;
     private javax.swing.JLabel imagenProducto;

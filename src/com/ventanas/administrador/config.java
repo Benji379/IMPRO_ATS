@@ -22,22 +22,26 @@ public class config extends javax.swing.JPanel {
     private String nombreNuevaSede;
     private int idc;
 
-    private void NuevoRegistro() {
-        sedeNueva = DatabaseUtils.obtenerUltimoValorID("sedes", "sede") + 1;
-        nombreNuevaSede = "Inventario_Sede_" + sedeNueva;
-        txtNuevaSede.setText(String.valueOf(sedeNueva));
-        txtFechaApertura.setText(Proceso.obtenerFechaHoraActual());
-    }
-
     public config() {
         initComponents();
         setBackground(new Color(1.0f, 1.0f, 1.0f, 0.0f));
         jlbTitulo.setText("<html><div style='text-align: center;'>" + "CONFIGURACION DEL SISTEMA");
-        RellenarComboBox.rellenarComboBox(comboSedes, "sedes", "sede");
-//        comboSedes.setSelectedItem(Data.getSede());
-        TransparentarTextField();
         NuevoRegistro();
+        comboSedes.setSelectedItem(Data.getSede());
+        TransparentarTextField();
         Consultar();
+    }
+
+    private void NuevoRegistro() {
+        comboSedes.removeAllItems();
+        RellenarComboBox.rellenarComboBox(comboSedes, "sedes", "sede");
+        sedeNueva = DatabaseUtils.obtenerUltimoValorID("sedes", "sede") + 1;
+        nombreNuevaSede = "Inventario_Sede_" + sedeNueva;
+        txtNuevaSede.setText(String.valueOf(sedeNueva));
+        txtFechaApertura.setText(Proceso.obtenerFechaHoraActual());
+        comboEstado.setSelectedItem("Activo");
+        txtDireccion.setText("");
+        txtDireccion.setEditable(true);
     }
 
     private void Consultar() {
@@ -65,6 +69,7 @@ public class config extends javax.swing.JPanel {
 
         comboEstado = new combobox.Combobox();
         comboSedes = new combobox.Combobox();
+        btnLimpiar = new javax.swing.JButton();
         btnModificarSede = new javax.swing.JButton();
         btnRegistrarSede = new javax.swing.JButton();
         btnGUARDAR = new javax.swing.JButton();
@@ -111,6 +116,19 @@ public class config extends javax.swing.JPanel {
             }
         });
         add(comboSedes, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 110, 60, 40));
+
+        btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/Configuracion/btnNuevoRegistro.png"))); // NOI18N
+        btnLimpiar.setBorder(null);
+        btnLimpiar.setBorderPainted(false);
+        btnLimpiar.setContentAreaFilled(false);
+        btnLimpiar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLimpiar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/Configuracion/btnNuevoRegistro_press.png"))); // NOI18N
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+        add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 210, 80, 70));
 
         btnModificarSede.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/Configuracion/btnGuardar.png"))); // NOI18N
         btnModificarSede.setBorder(null);
@@ -160,7 +178,7 @@ public class config extends javax.swing.JPanel {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, true
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -182,7 +200,7 @@ public class config extends javax.swing.JPanel {
         jlbEstado.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jlbEstado.setForeground(new java.awt.Color(255, 255, 255));
         jlbEstado.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jlbEstado.setText("En servicio");
+        jlbEstado.setText("Estado");
         add(jlbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 480, 110, 30));
 
         jlbFechaApertura.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -295,26 +313,45 @@ public class config extends javax.swing.JPanel {
     }//GEN-LAST:event_comboEstadoActionPerformed
 
     private void btnRegistrarSedeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarSedeActionPerformed
-
-        int dialog = JOptionPane.YES_NO_OPTION;
-        int result = JOptionPane.showConfirmDialog(null, "Desea Registrar Nueva Sede?", "Mensaje", dialog);
-        if (result == 0) {
+        if (Integer.parseInt(txtNuevaSede.getText()) < DatabaseUtils.obtenerUltimoValorID("sedes", "sede") + 1) {
+            JOptionPane.showMessageDialog(null, "No se puede registrar una sede existente", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
             if (!txtDireccion.getText().equals("")) {
-                String horaFechaActual = Proceso.obtenerFechaHoraActual();
-                String columnas[] = {"ubicacion", "fechaApertura", "estado"};
-                String valores[] = {txtDireccion.getText(), horaFechaActual, (String) comboEstado.getSelectedItem()};
-                Crud.insertarDatos("sedes", columnas, valores);
+                int dialog = JOptionPane.YES_NO_OPTION;
+                int result = JOptionPane.showConfirmDialog(null, "Desea Registrar Nueva Sede?", "Mensaje", dialog);
+                if (result == 0) {
+                    String horaFechaActual = Proceso.obtenerFechaHoraActual();
+                    String columnas[] = {"ubicacion", "fechaApertura", "estado"};
+                    String valores[] = {txtDireccion.getText(), horaFechaActual, (String) comboEstado.getSelectedItem()};
+                    Crud.insertarDatos("sedes", columnas, valores);
+                    String encabezados[] = {"id", "codigo", "nombre", "stock", "precio", "categoria", "marca", "urlImagen"};
+                    Crud.crearTabla(nombreNuevaSede, encabezados);
+                    Consultar();
+                    NuevoRegistro();
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Campo Direccion Vacío", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            String encabezados[] = {"id", "codigo", "nombre", "stock", "precio", "categoria", "marca", "urlImagen"};
-            Crud.crearTabla(nombreNuevaSede, encabezados);
-            Consultar();
-            NuevoRegistro();
         }
     }//GEN-LAST:event_btnRegistrarSedeActionPerformed
 
     private void btnModificarSedeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarSedeActionPerformed
+        int fila = JTSedes.getSelectedRow();
+
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(null, "Selecciona una fila");
+        } else {
+            int dialog = JOptionPane.YES_NO_OPTION;
+            int result = JOptionPane.showConfirmDialog(null, "Guardar Cambios?", "Mensaje", dialog);
+            if (result == 0) {
+                Map<String, String> datosInsertar = new HashMap<>();
+                datosInsertar.put("estado", (String) comboEstado.getSelectedItem());
+                crud.modificar("sedes", "sede", Integer.parseInt((String) JTSedes.getValueAt(fila, 0).toString()), datosInsertar);
+                Consultar();
+                NuevoRegistro();
+            }
+        }
+
 
     }//GEN-LAST:event_btnModificarSedeActionPerformed
 
@@ -333,8 +370,13 @@ public class config extends javax.swing.JPanel {
             txtDireccion.setText(Ubicacion);
             txtFechaApertura.setText(fechaApertura);
             comboEstado.setSelectedItem(Estado);
+            txtDireccion.setEditable(false);
         }
     }//GEN-LAST:event_JTSedesMouseClicked
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        NuevoRegistro();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -342,6 +384,7 @@ public class config extends javax.swing.JPanel {
     private com.formato.UIDesing.TableDark JTSedes;
     private javax.swing.JLabel SEPARADORGRANDE;
     private javax.swing.JButton btnGUARDAR;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificarSede;
     private javax.swing.JButton btnRegistrarSede;
     private combobox.Combobox comboEstado;

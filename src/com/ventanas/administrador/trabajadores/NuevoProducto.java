@@ -1,6 +1,8 @@
 package com.ventanas.administrador.trabajadores;
 
 import com.dao.InnerJoin.Crud;
+import com.dao.InnerJoin.DatabaseUtils;
+import com.dao.InnerJoin.daoLogin;
 import com.format.jnafilechooser.api.JnaFileChooser;
 import com.formato.procesos.BarcodeGenerator;
 import static com.formato.procesos.EditableComboBoxUtil.makeEditableComboBox;
@@ -11,6 +13,7 @@ import com.ventanas.administrador.frmInventario;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -22,6 +25,17 @@ public class NuevoProducto extends javax.swing.JFrame {
         Apariencia();
         TransparentarTxt();
         makeEditableComboBox(comboMarcas, true);
+        NuevoRegistro();
+    }
+    private int idProducto;
+
+    private void NuevoRegistro() {
+        idProducto = DatabaseUtils.obtenerUltimoValorID(daoLogin.NOMBRE_TABLA_SEDE, "id") + 1;
+        txtId.setText(String.valueOf(idProducto));
+        EscribirHtmlCentrar(IMAGEN, "");
+        Proceso.vaciarTxt(txtCodigo,txtNombre,txtPrecio,txtStock,txtUrlImagen);
+        GenerarBarras("");
+        IMAGEN.setIcon(null);
     }
 
     private void Apariencia() {
@@ -153,6 +167,9 @@ public class NuevoProducto extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtUrlImagenKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtUrlImagenKeyTyped(evt);
+            }
         });
         jPanel1.add(txtUrlImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 530, 240, 30));
 
@@ -245,6 +262,9 @@ public class NuevoProducto extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtStockKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtStockKeyTyped(evt);
+            }
         });
         jPanel1.add(txtStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 330, 180, 30));
 
@@ -266,6 +286,9 @@ public class NuevoProducto extends javax.swing.JFrame {
         txtPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtPrecioKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioKeyTyped(evt);
             }
         });
         jPanel1.add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 330, 180, 30));
@@ -289,6 +312,9 @@ public class NuevoProducto extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtCodigoKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodigoKeyTyped(evt);
+            }
         });
         jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 210, 180, 30));
 
@@ -310,6 +336,9 @@ public class NuevoProducto extends javax.swing.JFrame {
         txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtNombreKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
             }
         });
         jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 210, 180, 30));
@@ -353,6 +382,9 @@ public class NuevoProducto extends javax.swing.JFrame {
             frmInventario.ventanaNuevoProducto = false;
             frmInventario.btnAtras.setEnabled(true);
             frmInventario.btnAgregarNuevo.setEnabled(true);
+            frmInventario p = new frmInventario();
+            p.Filtrar();
+            p.Consultar();
             setVisible(false);
         }
     }
@@ -370,16 +402,42 @@ public class NuevoProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_comboCategoriaActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
+
+        boolean vacio = Proceso.ComprobarTxtVacio(txtCodigo, txtNombre, txtPrecio, txtStock, txtUrlImagen);
+
+        if (vacio) {
+            JOptionPane.showMessageDialog(null, "Campos Vacíos", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            if (Proceso.validacionDeDecimal(txtPrecio)) {
+                int valor = JOptionPane.showConfirmDialog(this, "Confirmar Ingreso de Producto", "Advertencia", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (valor == JOptionPane.YES_NO_OPTION) {
+                    GuardarProducto();
+                    NuevoRegistro();
+                    JOptionPane.showMessageDialog(null, "Nuevo producto Registrado", "Mensage", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Precio Inválido", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_btnAgregarActionPerformed
-    
-    private void GuardarProducto(){
-        String encabezadosTabla [] = {""};
-        String Datos [] = {""};
-        Crud.insertarDatos("", encabezadosTabla, Datos);
+
+    private void GuardarProducto() {
+
+        DecimalFormat df = new DecimalFormat("#.00");
+        String codigo = txtCodigo.getText();
+        String nombre = txtNombre.getText();
+        String stock = txtStock.getText();
+        String precio = df.format(Double.parseDouble(txtPrecio.getText())).replace(",", ".");
+        String categoria = (String) comboCategoria.getSelectedItem();
+        String marca = (String) comboMarcas.getSelectedItem();
+        String url = txtUrlImagen.getText();
+
+        String encabezadosTabla[] = {"codigo", "nombre", "stock", "precio", "categoria", "marca", "urlImagen"};
+        String Datos[] = {codigo, nombre, stock, precio, categoria, marca, url};
+        Crud.insertarDatos(daoLogin.NOMBRE_TABLA_SEDE, encabezadosTabla, Datos);
     }
-            
-    
+
+
     private void txtCodigoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyReleased
         GenerarBarras(txtCodigo.getText());
     }//GEN-LAST:event_txtCodigoKeyReleased
@@ -423,6 +481,26 @@ public class NuevoProducto extends javax.swing.JFrame {
             ImageUtils.setScaledImageFromUrl(txtUrlImagen.getText(), IMAGEN);
         }
     }//GEN-LAST:event_txtUrlImagenKeyReleased
+
+    private void txtCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyTyped
+        Proceso.limitacionCaracteres(txtCodigo, evt, 30, false);
+    }//GEN-LAST:event_txtCodigoKeyTyped
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        Proceso.limitacionCaracteres(txtNombre, evt, 30, true);
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtStockKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtStockKeyTyped
+        Proceso.limitacionNumeros(txtStock, evt, 5);
+    }//GEN-LAST:event_txtStockKeyTyped
+
+    private void txtPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyTyped
+        Proceso.limitacionNumerosDecimales(txtStock, evt, 7);
+    }//GEN-LAST:event_txtPrecioKeyTyped
+
+    private void txtUrlImagenKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUrlImagenKeyTyped
+        Proceso.limitacionEspacio(txtUrlImagen, evt);
+    }//GEN-LAST:event_txtUrlImagenKeyTyped
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
