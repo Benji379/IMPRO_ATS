@@ -4,15 +4,19 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * *
+ * @correo atochelopezb@gmail.com
+ * @author Benji
+ */
 public class ConexionSQL {
 
     Connection conectar = null;
 
     public Connection conexion() {
-        
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ConexionSQL.class.getName()).log(Level.SEVERE, null, ex);
         }

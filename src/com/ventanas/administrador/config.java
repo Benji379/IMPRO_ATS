@@ -1,10 +1,15 @@
 package com.ventanas.administrador;
 
-import com.formato.UIDesing.JScrollPaneUtils;
+import com.dao.InnerJoin.Crud;
+import com.dao.InnerJoin.CrudJTable;
+import com.dao.InnerJoin.DatabaseUtils;
+import com.dao.InnerJoin.RellenarComboBox;
+import com.formato.procesos.Data;
+import com.formato.procesos.Proceso;
 import java.awt.Color;
-import com.formato.UIDesing.TableDark;
-import javax.swing.JScrollBar;
-import scrollbar.ScrollBarCustom;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -12,120 +17,349 @@ import scrollbar.ScrollBarCustom;
  */
 public class config extends javax.swing.JPanel {
 
+    CrudJTable crud = new CrudJTable();
+    private int sedeNueva;
+    private String nombreNuevaSede;
+    private int idc;
+
+    private void NuevoRegistro() {
+        sedeNueva = DatabaseUtils.obtenerUltimoValorID("sedes", "sede") + 1;
+        nombreNuevaSede = "Inventario_Sede_" + sedeNueva;
+        txtNuevaSede.setText(String.valueOf(sedeNueva));
+        txtFechaApertura.setText(Proceso.obtenerFechaHoraActual());
+    }
+
     public config() {
         initComponents();
         setBackground(new Color(1.0f, 1.0f, 1.0f, 0.0f));
-//        TableDark p = new TableDark();
-//        p.fixTable(jScrollPane1);
-//        JScrollPaneUtils.removeWhiteBorder(jScrollPane1);
-//        JListCustomization.customizeJList(jList1, 40, 3,1);
-        jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
-        ScrollBarCustom sp = new ScrollBarCustom();
-        sp.setOrientation(JScrollBar.HORIZONTAL);
-        jScrollPane1.setHorizontalScrollBar(sp);
+        jlbTitulo.setText("<html><div style='text-align: center;'>" + "CONFIGURACION DEL SISTEMA");
+        RellenarComboBox.rellenarComboBox(comboSedes, "sedes", "sede");
+//        comboSedes.setSelectedItem(Data.getSede());
+        TransparentarTextField();
+        NuevoRegistro();
+        Consultar();
+    }
+
+    private void Consultar() {
+        crud.consultarTabla("sedes", asignarColumnasTabla(), JTSedes);
+    }
+
+    private Map<String, Integer> asignarColumnasTabla() {
+        Map<String, Integer> columnas = new HashMap<>();
+
+        columnas.put("sede", 0);
+        columnas.put("ubicacion", 1);
+        columnas.put("fechaApertura", 2);
+        columnas.put("estado", 3);
+
+        return columnas;
+    }
+
+    private void TransparentarTextField() {
+        Proceso.transparentarTxtField(txtDireccion, txtFechaApertura, txtNuevaSede);
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        comboEstado = new combobox.Combobox();
+        comboSedes = new combobox.Combobox();
+        btnModificarSede = new javax.swing.JButton();
+        btnRegistrarSede = new javax.swing.JButton();
+        btnGUARDAR = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jPanel1 = new javax.swing.JPanel();
+        JTSedes = new com.formato.UIDesing.TableDark();
+        jlbEstado = new javax.swing.JLabel();
+        jlbFechaApertura = new javax.swing.JLabel();
+        txtFechaApertura = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jlbUbicacion = new javax.swing.JLabel();
+        txtDireccion = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jlbNSede = new javax.swing.JLabel();
+        jlbSede2 = new javax.swing.JLabel();
+        jlbSede1 = new javax.swing.JLabel();
+        jlbTitulo = new javax.swing.JLabel();
+        txtNuevaSede = new javax.swing.JTextField();
+        jlbSede = new javax.swing.JLabel();
+        SEPARADORGRANDE = new javax.swing.JLabel();
+        FONDO = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(30, 30, 30));
         setPreferredSize(new java.awt.Dimension(960, 590));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(600, 600));
-
-        jPanel2.setBackground(new java.awt.Color(24, 24, 24));
-        jPanel2.setPreferredSize(new java.awt.Dimension(700, 600));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setText("HOLAAAAAAAAAA");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
-
-        jLabel2.setText("HOLAAAAAAAAAA");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 130, -1, -1));
-
-        jLabel7.setText("HOLAAAAAAAAAA");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, -1, -1));
-
-        jScrollPane1.setViewportView(jPanel2);
-
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 410, 220));
-
-        jList1.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        comboEstado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Activo", "Mantenimiento" }));
+        comboEstado.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
+        comboEstado.setLabeText("");
+        comboEstado.setLineColor(new java.awt.Color(0, 0, 0));
+        comboEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboEstadoActionPerformed(evt);
+            }
         });
-        jScrollPane2.setViewportView(jList1);
+        add(comboEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 480, 130, 40));
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 140, 280));
+        comboSedes.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        comboSedes.setLabeText("");
+        comboSedes.setLineColor(new java.awt.Color(0, 0, 0));
+        comboSedes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboSedesActionPerformed(evt);
+            }
+        });
+        add(comboSedes, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 110, 60, 40));
 
-        jScrollPane3.setPreferredSize(new java.awt.Dimension(1000, 1000));
+        btnModificarSede.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/Configuracion/btnGuardar.png"))); // NOI18N
+        btnModificarSede.setBorder(null);
+        btnModificarSede.setBorderPainted(false);
+        btnModificarSede.setContentAreaFilled(false);
+        btnModificarSede.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModificarSede.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/Configuracion/btnGuardar_press.png"))); // NOI18N
+        btnModificarSede.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarSedeActionPerformed(evt);
+            }
+        });
+        add(btnModificarSede, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 210, 80, 70));
 
-        jPanel1.setPreferredSize(new java.awt.Dimension(1000, 1000));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        btnRegistrarSede.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/Configuracion/btnRegistrarSede.png"))); // NOI18N
+        btnRegistrarSede.setBorder(null);
+        btnRegistrarSede.setBorderPainted(false);
+        btnRegistrarSede.setContentAreaFilled(false);
+        btnRegistrarSede.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRegistrarSede.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/Configuracion/btnRegistrarSede_press.png"))); // NOI18N
+        btnRegistrarSede.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarSedeActionPerformed(evt);
+            }
+        });
+        add(btnRegistrarSede, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 210, 80, 70));
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 48)); // NOI18N
-        jLabel3.setText("CAJA");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 240, 90));
+        btnGUARDAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/Configuracion/btnGuardar.png"))); // NOI18N
+        btnGUARDAR.setBorder(null);
+        btnGUARDAR.setBorderPainted(false);
+        btnGUARDAR.setContentAreaFilled(false);
+        btnGUARDAR.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGUARDAR.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/Configuracion/btnGuardar_press.png"))); // NOI18N
+        btnGUARDAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGUARDARActionPerformed(evt);
+            }
+        });
+        add(btnGUARDAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 100, 80, 70));
 
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 48)); // NOI18N
-        jLabel4.setText("CEPILLO");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 240, 90));
+        JTSedes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 48)); // NOI18N
-        jLabel5.setText("ARROZ");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 240, 90));
+            },
+            new String [] {
+                "Sede", "Ubicacion", "Apertura", "Estado"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true, true
+            };
 
-        jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 48)); // NOI18N
-        jLabel6.setText("MOCHILLA");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 290, 90));
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        JTSedes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JTSedesMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(JTSedes);
+        if (JTSedes.getColumnModel().getColumnCount() > 0) {
+            JTSedes.getColumnModel().getColumn(0).setPreferredWidth(60);
+        }
 
-        jButton1.setText("jButton1");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, -1, -1));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 280, -1, 260));
 
-        jButton2.setText("jButton1");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 90, -1, -1));
+        jlbEstado.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        jlbEstado.setForeground(new java.awt.Color(255, 255, 255));
+        jlbEstado.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlbEstado.setText("En servicio");
+        add(jlbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 480, 110, 30));
 
-        jScrollPane3.setViewportView(jPanel1);
+        jlbFechaApertura.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        jlbFechaApertura.setForeground(new java.awt.Color(255, 255, 255));
+        jlbFechaApertura.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlbFechaApertura.setText("Fec.Apertura");
+        add(jlbFechaApertura, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 420, 110, 30));
 
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 290, 360, 300));
+        txtFechaApertura.setEditable(false);
+        txtFechaApertura.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
+        txtFechaApertura.setForeground(new java.awt.Color(255, 255, 255));
+        txtFechaApertura.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtFechaApertura.setBorder(null);
+        add(txtFechaApertura, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 420, 130, 30));
+
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/Configuracion/Separadores.png"))); // NOI18N
+        jLabel3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 450, 130, 20));
+
+        jlbUbicacion.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        jlbUbicacion.setForeground(new java.awt.Color(255, 255, 255));
+        jlbUbicacion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlbUbicacion.setText("Ubicacion");
+        add(jlbUbicacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 360, 110, 30));
+
+        txtDireccion.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
+        txtDireccion.setForeground(new java.awt.Color(255, 255, 255));
+        txtDireccion.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtDireccion.setBorder(null);
+        add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 360, 130, 30));
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/Configuracion/Separadores.png"))); // NOI18N
+        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 390, 130, 20));
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/Configuracion/Separadores.png"))); // NOI18N
+        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 320, 80, 20));
+
+        jlbNSede.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        jlbNSede.setForeground(new java.awt.Color(255, 255, 255));
+        jlbNSede.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlbNSede.setText("Sede");
+        add(jlbNSede, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 290, 80, 30));
+
+        jlbSede2.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
+        jlbSede2.setForeground(new java.awt.Color(255, 255, 255));
+        jlbSede2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbSede2.setText("Lista de Sedes");
+        add(jlbSede2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 200, 220, 50));
+
+        jlbSede1.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
+        jlbSede1.setForeground(new java.awt.Color(255, 255, 255));
+        jlbSede1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbSede1.setText("Nueva Sede");
+        add(jlbSede1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, 220, 50));
+
+        jlbTitulo.setFont(new java.awt.Font("Century Schoolbook", 1, 34)); // NOI18N
+        jlbTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        jlbTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbTitulo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        add(jlbTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, 350, 100));
+
+        txtNuevaSede.setEditable(false);
+        txtNuevaSede.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        txtNuevaSede.setForeground(new java.awt.Color(255, 255, 255));
+        txtNuevaSede.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtNuevaSede.setBorder(null);
+        add(txtNuevaSede, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 290, 80, 30));
+
+        jlbSede.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
+        jlbSede.setForeground(new java.awt.Color(255, 255, 255));
+        jlbSede.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbSede.setText("Sede:");
+        add(jlbSede, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 100, 100, 50));
+
+        SEPARADORGRANDE.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
+        SEPARADORGRANDE.setForeground(new java.awt.Color(255, 255, 255));
+        SEPARADORGRANDE.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        SEPARADORGRANDE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/Configuracion/SEPARADOR_GRANDE.png"))); // NOI18N
+        add(SEPARADORGRANDE, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, 780, 50));
+
+        FONDO.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
+        FONDO.setForeground(new java.awt.Color(255, 255, 255));
+        FONDO.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        FONDO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/Configuracion/FONDO.png"))); // NOI18N
+        add(FONDO, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 590));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnGUARDARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGUARDARActionPerformed
+        int dialog = JOptionPane.YES_NO_OPTION;
+        int result = JOptionPane.showConfirmDialog(null, "Se finalizará la sesion\nDesea guardar los Cambios?", "Mensaje", dialog);
+        if (result == 0) {
+            Data.GuardarSede((String) comboSedes.getSelectedItem());
+            JOptionPane.showMessageDialog(null, "Programa Configurado");
+            System.exit(0);
+        }
+
+    }//GEN-LAST:event_btnGUARDARActionPerformed
+
+    private void comboSedesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboSedesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboSedesActionPerformed
+
+    private void comboEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboEstadoActionPerformed
+
+    private void btnRegistrarSedeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarSedeActionPerformed
+
+        int dialog = JOptionPane.YES_NO_OPTION;
+        int result = JOptionPane.showConfirmDialog(null, "Desea Registrar Nueva Sede?", "Mensaje", dialog);
+        if (result == 0) {
+            if (!txtDireccion.getText().equals("")) {
+                String horaFechaActual = Proceso.obtenerFechaHoraActual();
+                String columnas[] = {"ubicacion", "fechaApertura", "estado"};
+                String valores[] = {txtDireccion.getText(), horaFechaActual, (String) comboEstado.getSelectedItem()};
+                Crud.insertarDatos("sedes", columnas, valores);
+            } else {
+                JOptionPane.showMessageDialog(null, "Campo Direccion Vacío", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            String encabezados[] = {"id", "codigo", "nombre", "stock", "precio", "categoria", "marca", "urlImagen"};
+            Crud.crearTabla(nombreNuevaSede, encabezados);
+            Consultar();
+            NuevoRegistro();
+        }
+    }//GEN-LAST:event_btnRegistrarSedeActionPerformed
+
+    private void btnModificarSedeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarSedeActionPerformed
+
+    }//GEN-LAST:event_btnModificarSedeActionPerformed
+
+    private void JTSedesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTSedesMouseClicked
+        int fila = JTSedes.getSelectedRow();
+
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(null, "Selecciona una fila");
+        } else {
+            idc = Integer.parseInt((String) JTSedes.getValueAt(fila, 0).toString());
+            String Ubicacion = (String) JTSedes.getValueAt(fila, 1);
+            String fechaApertura = (String) JTSedes.getValueAt(fila, 2);
+            String Estado = (String) JTSedes.getValueAt(fila, 3);
+
+            txtNuevaSede.setText(String.valueOf(idc));
+            txtDireccion.setText(Ubicacion);
+            txtFechaApertura.setText(fechaApertura);
+            comboEstado.setSelectedItem(Estado);
+        }
+    }//GEN-LAST:event_JTSedesMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel FONDO;
+    private com.formato.UIDesing.TableDark JTSedes;
+    private javax.swing.JLabel SEPARADORGRANDE;
+    private javax.swing.JButton btnGUARDAR;
+    private javax.swing.JButton btnModificarSede;
+    private javax.swing.JButton btnRegistrarSede;
+    private combobox.Combobox comboEstado;
+    private combobox.Combobox comboSedes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    public static javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jlbEstado;
+    private javax.swing.JLabel jlbFechaApertura;
+    private javax.swing.JLabel jlbNSede;
+    private javax.swing.JLabel jlbSede;
+    private javax.swing.JLabel jlbSede1;
+    private javax.swing.JLabel jlbSede2;
+    private javax.swing.JLabel jlbTitulo;
+    private javax.swing.JLabel jlbUbicacion;
+    private javax.swing.JTextField txtDireccion;
+    private javax.swing.JTextField txtFechaApertura;
+    private javax.swing.JTextField txtNuevaSede;
     // End of variables declaration//GEN-END:variables
 }

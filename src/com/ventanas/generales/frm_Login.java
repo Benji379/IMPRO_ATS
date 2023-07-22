@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import com.formato.procesos.Proceso;
 import com.dao.InnerJoin.daoLogin;
+import com.formato.procesos.Data;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
@@ -363,15 +364,29 @@ public final class frm_Login extends javax.swing.JFrame {
         EntrarSistema();
     }
 
+    private boolean autenticarUsuarioSede() {
+        boolean valido = false;
+        String sede = daoLogin.consultarRango("trabajadores", "dni", txtUsuario.getText(), "sede");
+        String cargo = daoLogin.consultarRango("trabajadores", "dni", txtUsuario.getText(), "cargo");
+
+        if (sede.equals(Data.getSede()) || cargo.equalsIgnoreCase("Administrador")) {
+            valido = true;
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuario no pertenece a la sede", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return valido;
+    }
+
     private void EntrarSistema() throws SQLException {
         daoLogin usuario = new daoLogin();
         boolean entrar = usuario.autenticarUsuario("trabajadores", "dni", "contraseña", txtUsuario.getText(), txtContraseña.getText());
-
         if (entrar) {
-            daoLogin.guardarDatos();
-            frm_Principal abrir = new frm_Principal();
-            abrir.setVisible(true);
-            this.hide();
+            if (autenticarUsuarioSede()) {
+                daoLogin.guardarDatos();
+                frm_Principal abrir = new frm_Principal();
+                abrir.setVisible(true);
+                this.hide();
+            }
         }
     }
 

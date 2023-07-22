@@ -32,10 +32,12 @@ public class Proceso {
         }
     }
 
-    public static void ComprobarTxtVacio(JTextField txt, String nameText, JLabel alerta) {
-        if ("".equals(txt.getText())) {
-            alerta.setText(nameText + " vacío");
+    public static boolean ComprobarTxtVacio(JTextField... txt) {
+        boolean vacio = false;
+        for (JTextField text : txt) {
+            vacio = text.getText().equals("");
         }
+        return vacio;
     }
 
     public static void comprobar2Iguales(JTextField txt, JTextField txt1, JLabel alerta) {
@@ -89,6 +91,12 @@ public class Proceso {
         DateFormat formatoFecha = new SimpleDateFormat("dd-MM-YYYY");
         String fecha = formatoFecha.format(fechaActual);
         txtLabel.setText(fecha);
+    }
+
+    public static String obtenerFechaHoraActual() {
+        Date fechaHora = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return formato.format(fechaHora);
     }
 
     public static void DiaSemana(JLabel txtLabel) {

@@ -2,6 +2,7 @@ package com.ventanas.administrador;
 
 import com.formato.procesos.Clima;
 import com.dao.InnerJoin.daoLogin;
+import com.formato.procesos.Data;
 import com.ventanas.administrador.trabajadores.menuTrabajadores;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -25,7 +26,7 @@ public final class frm_Principal extends javax.swing.JFrame {
     String apellidos = daoLogin.APELLIDOS;
     String correo = daoLogin.CORREO;
     String codigo = daoLogin.CODIGO;
-    String NSede = daoLogin.NSEDE;
+    String NSede = Data.getSede();
 
     public frm_Principal() {
         initComponents();
@@ -449,9 +450,6 @@ public final class frm_Principal extends javax.swing.JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(frm_Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-
         //</editor-fold>
         //</editor-fold>
 

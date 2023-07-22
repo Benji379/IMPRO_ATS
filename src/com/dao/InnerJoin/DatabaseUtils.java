@@ -1,9 +1,5 @@
 package com.dao.InnerJoin;
 
-/**
- *
- * @author Benji
- */
 import com.dao.ConexionBd.ConexionSQL;
 import java.sql.*;
 import java.util.List;
@@ -154,6 +150,33 @@ public class DatabaseUtils {
         return ultimoValor;
     }
 
+    public static int obtenerUltimoValorID(String nombreTabla, String encabezado) {
+        ConexionSQL con = new ConexionSQL();
+        Connection conexion;
+        Statement consulta;
+        ResultSet resultado;
+        int ultimoValor = 0;
+        String sql = "SELECT " + encabezado + " FROM " + nombreTabla + " ORDER BY " + encabezado + " DESC LIMIT 1";
+
+        try {
+            conexion = con.conexion();
+            consulta = conexion.createStatement();
+            resultado = consulta.executeQuery(sql);
+
+            if (resultado.next()) {
+                ultimoValor = resultado.getInt(encabezado);
+            }
+
+            resultado.close();
+            consulta.close();
+            conexion.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        return ultimoValor;
+    }
+
     public static String obtenerUltimoValor(String nombreTabla, String encabezado, String puerto) {
         ConexionSQL con = new ConexionSQL();
         Connection conexion;
@@ -180,5 +203,4 @@ public class DatabaseUtils {
 
         return ultimoValor;
     }
-
 }

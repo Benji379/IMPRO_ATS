@@ -100,7 +100,6 @@ public class panelRegistrarTrab extends javax.swing.JPanel {
         comboGenero.setLineColor(new java.awt.Color(0, 0, 0));
         add(comboGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 130, 60, 40));
 
-        comboSede.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
         comboSede.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         comboSede.setLabeText("");
         comboSede.setLineColor(new java.awt.Color(0, 0, 0));

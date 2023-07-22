@@ -1,6 +1,7 @@
 package com.dao.InnerJoin;
 
 import com.dao.ConexionBd.ConexionSQL;
+import com.formato.procesos.Data;
 import com.ventanas.generales.frm_Login;
 import java.awt.HeadlessException;
 import java.sql.Connection;
@@ -14,7 +15,6 @@ import javax.swing.JOptionPane;
  *
  * @author Benji
  */
-
 public class daoLogin {
 
     private final Connection conexion;
@@ -25,15 +25,15 @@ public class daoLogin {
     }
 
     public boolean autenticarUsuario(String tabla, String columnaEmpleado, String columnaContrasena, String usuario, String contrasena) {
-        
+
         boolean ingresoValido = false;
         String query = "SELECT * FROM " + tabla + " WHERE " + columnaEmpleado + " = ?";
-        
+
         try {
             try (PreparedStatement statement = conexion.prepareStatement(query)) {
                 statement.setString(1, usuario);
                 ResultSet resultSet = statement.executeQuery();
-                
+
                 if (!resultSet.next()) {
                     JOptionPane.showMessageDialog(null, "El usuario no existe", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
@@ -50,7 +50,7 @@ public class daoLogin {
         }
         return ingresoValido;
     }
-    
+
     public static String consultarRango(String nameTablaSQL, String nameColumna, String datoComparar, String columnaDatoRetornar) {
 
         ConexionSQL con1 = new ConexionSQL();
@@ -61,7 +61,7 @@ public class daoLogin {
         String aux, aux2;
         String sql = "select * from " + nameTablaSQL;
         int existe = 0;
-        
+
         try {
             conet = con1.conexion();
             st = conet.createStatement();
@@ -84,7 +84,7 @@ public class daoLogin {
         return datoRetornar;
     }
 
-    public static String NOMBRE, APELLIDOS, CORREO, CARGO, GENERO, CODIGO, NSEDE, DOCUMENT;
+    public static String NOMBRE, APELLIDOS, CORREO, CARGO, GENERO, CODIGO, NSEDE, DOCUMENT, NOMBRE_TABLA_SEDE;
 
     public static void guardarDatos() {
         String document = frm_Login.txtUsuario.getText();
@@ -95,7 +95,7 @@ public class daoLogin {
         String genero = daoLogin.consultarRango("trabajadores", "dni", document, "genero");
         String codigo = daoLogin.consultarRango("trabajadores", "dni", document, "codigo");
         String NSede = daoLogin.consultarRango("trabajadores", "dni", document, "sede");
-        
+        String nombreTablaSede = "inventario_sede_" + Data.getSede();
         DOCUMENT = document;
         NOMBRE = nombre;
         APELLIDOS = apellidos;
@@ -104,6 +104,7 @@ public class daoLogin {
         GENERO = genero;
         CODIGO = codigo;
         NSEDE = NSede;
+        NOMBRE_TABLA_SEDE = nombreTablaSede;
     }
 
 }
