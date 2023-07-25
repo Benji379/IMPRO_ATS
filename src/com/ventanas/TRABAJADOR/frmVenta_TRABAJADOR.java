@@ -1,4 +1,4 @@
-package com.ventanas.generales;
+package com.ventanas.TRABAJADOR;
 
 import com.dao.ConexionBd.ConexionSQL;
 import com.dao.InnerJoin.Crud;
@@ -11,8 +11,6 @@ import com.formato.procesos.JSON.GenerarRegistroJsonJTableVentas;
 import com.formato.procesos.JTableRellenar;
 import com.formato.procesos.JTableToHTMLConverter;
 import com.formato.procesos.Proceso;
-import com.ventanas.administrador.frm_Principal;
-import com.ventanas.administrador.ventas.inventarioEmergente;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.print.PrinterException;
@@ -35,7 +33,7 @@ import scrollbar.ScrollBarCustom;
  *
  * @author Benji
  */
-public final class frmVenta extends javax.swing.JFrame {
+public final class frmVenta_TRABAJADOR extends javax.swing.JFrame {
 
     private double Efectivo = 0.0;
     private double Total = 0.0;
@@ -44,7 +42,7 @@ public final class frmVenta extends javax.swing.JFrame {
     private String nombresCompleto = "";
     Proceso ic = new Proceso();
 
-    public frmVenta() {
+    public frmVenta_TRABAJADOR() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setBackground(new Color(1.0f, 1.0f, 1.0f, 0.0f));
@@ -214,7 +212,7 @@ public final class frmVenta extends javax.swing.JFrame {
                 btnBuscarProducto1ActionPerformed(evt);
             }
         });
-        jPanel1.add(btnBuscarProducto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 160, 60, 60));
+        jPanel1.add(btnBuscarProducto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 160, 60, 60));
 
         btnBuscarDNI.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/Venta/btnBuscarDNI.png"))); // NOI18N
         btnBuscarDNI.setBorder(null);
@@ -557,7 +555,7 @@ public final class frmVenta extends javax.swing.JFrame {
         int option = JOptionPane.showConfirmDialog(null, "¿Estás seguro de cancelar la compra?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, ic.icono("/com/img/emergentes/cancelarCompra.png"));
         if (option == JOptionPane.YES_OPTION) {
             cancelarCompra();
-            frm_Principal abrir = new frm_Principal();
+            frm_Principal_TRABAJADOR abrir = new frm_Principal_TRABAJADOR();
             abrir.setVisible(true);
             hide();
         }
@@ -653,7 +651,7 @@ public final class frmVenta extends javax.swing.JFrame {
         try {
             bill.print();
         } catch (PrinterException ex) {
-            Logger.getLogger(frmVenta.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(frmVenta_TRABAJADOR.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnBuscarProducto1ActionPerformed
 
@@ -704,7 +702,7 @@ public final class frmVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
-        inventarioEmergente abrir = new inventarioEmergente();
+        inventarioEmergente_TRABAJADOR abrir = new inventarioEmergente_TRABAJADOR();
         abrir.setVisible(true);
     }//GEN-LAST:event_btnBuscarProductoActionPerformed
 
@@ -827,16 +825,19 @@ public final class frmVenta extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmVenta.class
+            java.util.logging.Logger.getLogger(frmVenta_TRABAJADOR.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new frmVenta().setVisible(true);
+            new frmVenta_TRABAJADOR().setVisible(true);
         });
     }
 

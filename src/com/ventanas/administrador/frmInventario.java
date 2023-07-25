@@ -1,7 +1,7 @@
 package com.ventanas.administrador;
 
+import com.dao.InnerJoin.Crud;
 import com.dao.InnerJoin.CrudJTable;
-import com.dao.InnerJoin.RellenarComboBox;
 import com.dao.InnerJoin.daoLogin;
 import com.formato.UIDesing.JScrollPaneUtils;
 import com.formato.procesos.ImageUtils;
@@ -36,6 +36,7 @@ public final class frmInventario extends javax.swing.JFrame {
         DiseñoInicial();
         System.out.println("NOMBRE TABLA: " + nameTablaInventario);
         Consultar();
+        Proceso.transparentarTxtField(txtCategoria, txtCodigo, txtMarca, txtNombre, txtPrecio, txtStock);
     }
 
     private void DiseñoInicial() {
@@ -105,6 +106,7 @@ public final class frmInventario extends javax.swing.JFrame {
     private void initComponents() {
 
         panelInventario = new javax.swing.JPanel();
+        btnActualizar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         btnAgregarNuevo = new javax.swing.JButton();
         jScrollPaneFiltrar = new javax.swing.JScrollPane();
@@ -137,17 +139,17 @@ public final class frmInventario extends javax.swing.JFrame {
         jlbDatos1 = new javax.swing.JLabel();
         jScrollPaneDatos = new javax.swing.JScrollPane();
         panelDatos = new javax.swing.JPanel();
-        txtCodigo = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        txtStock = new javax.swing.JTextField();
+        txtPrecio = new javax.swing.JTextField();
+        txtCategoria = new javax.swing.JTextField();
+        txtMarca = new javax.swing.JTextField();
+        txtCodigo = new javax.swing.JTextField();
         jlbCodigo = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JLabel();
         jlbNombre = new javax.swing.JLabel();
-        txtStock = new javax.swing.JLabel();
         jlbStock = new javax.swing.JLabel();
-        txtCategoria = new javax.swing.JLabel();
         jlbCategoria = new javax.swing.JLabel();
-        txtPrecio = new javax.swing.JLabel();
         jlbPrecio = new javax.swing.JLabel();
-        txtMarca = new javax.swing.JLabel();
         jlbMarca = new javax.swing.JLabel();
         separador5 = new javax.swing.JLabel();
         separador1 = new javax.swing.JLabel();
@@ -172,6 +174,19 @@ public final class frmInventario extends javax.swing.JFrame {
 
         panelInventario.setBackground(new java.awt.Color(24, 24, 24));
         panelInventario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/iconos/actualizar.png"))); // NOI18N
+        btnActualizar.setBorder(null);
+        btnActualizar.setBorderPainted(false);
+        btnActualizar.setContentAreaFilled(false);
+        btnActualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnActualizar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+        panelInventario.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 280, 60, 60));
 
         btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/inventario/btnLimpiar.png"))); // NOI18N
         btnLimpiar.setBorder(null);
@@ -424,18 +439,41 @@ public final class frmInventario extends javax.swing.JFrame {
         jlbDatos1.setForeground(new java.awt.Color(255, 255, 255));
         jlbDatos1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlbDatos1.setText("Datos");
-        panelInventario.add(jlbDatos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 290, 100, 30));
+        panelInventario.add(jlbDatos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 290, 100, 30));
 
         panelDatos.setBackground(new java.awt.Color(24, 24, 24));
         panelDatos.setPreferredSize(new java.awt.Dimension(280, 340));
         panelDatos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        txtNombre.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
+        txtNombre.setForeground(new java.awt.Color(255, 255, 255));
+        txtNombre.setBorder(null);
+        panelDatos.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 150, 30));
+
+        txtStock.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
+        txtStock.setForeground(new java.awt.Color(255, 255, 255));
+        txtStock.setBorder(null);
+        panelDatos.add(txtStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, 150, 30));
+
+        txtPrecio.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
+        txtPrecio.setForeground(new java.awt.Color(255, 255, 255));
+        txtPrecio.setBorder(null);
+        panelDatos.add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, 150, 30));
+
+        txtCategoria.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
+        txtCategoria.setForeground(new java.awt.Color(255, 255, 255));
+        txtCategoria.setBorder(null);
+        panelDatos.add(txtCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 230, 150, 30));
+
+        txtMarca.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
+        txtMarca.setForeground(new java.awt.Color(255, 255, 255));
+        txtMarca.setBorder(null);
+        panelDatos.add(txtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 280, 150, 30));
+
         txtCodigo.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
         txtCodigo.setForeground(new java.awt.Color(255, 255, 255));
-        txtCodigo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        txtCodigo.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        txtCodigo.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        panelDatos.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 150, 30));
+        txtCodigo.setBorder(null);
+        panelDatos.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(109, 30, 150, 30));
 
         jlbCodigo.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
         jlbCodigo.setForeground(new java.awt.Color(255, 255, 255));
@@ -443,25 +481,11 @@ public final class frmInventario extends javax.swing.JFrame {
         jlbCodigo.setText("Código:");
         panelDatos.add(jlbCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 90, 30));
 
-        txtNombre.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
-        txtNombre.setForeground(new java.awt.Color(255, 255, 255));
-        txtNombre.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        txtNombre.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        txtNombre.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        panelDatos.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 150, 30));
-
         jlbNombre.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
         jlbNombre.setForeground(new java.awt.Color(255, 255, 255));
         jlbNombre.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jlbNombre.setText("nombre:");
         panelDatos.add(jlbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 110, 30));
-
-        txtStock.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
-        txtStock.setForeground(new java.awt.Color(255, 255, 255));
-        txtStock.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        txtStock.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        txtStock.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        panelDatos.add(txtStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, 150, 30));
 
         jlbStock.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
         jlbStock.setForeground(new java.awt.Color(255, 255, 255));
@@ -469,38 +493,17 @@ public final class frmInventario extends javax.swing.JFrame {
         jlbStock.setText("Stock:");
         panelDatos.add(jlbStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 90, 30));
 
-        txtCategoria.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
-        txtCategoria.setForeground(new java.awt.Color(255, 255, 255));
-        txtCategoria.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        txtCategoria.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        txtCategoria.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        panelDatos.add(txtCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 230, 150, 30));
-
         jlbCategoria.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
         jlbCategoria.setForeground(new java.awt.Color(255, 255, 255));
         jlbCategoria.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jlbCategoria.setText("Categoría:");
         panelDatos.add(jlbCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 110, 30));
 
-        txtPrecio.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
-        txtPrecio.setForeground(new java.awt.Color(255, 255, 255));
-        txtPrecio.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        txtPrecio.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        txtPrecio.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        panelDatos.add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, 150, 30));
-
         jlbPrecio.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
         jlbPrecio.setForeground(new java.awt.Color(255, 255, 255));
         jlbPrecio.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jlbPrecio.setText("Precio:");
         panelDatos.add(jlbPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 90, 30));
-
-        txtMarca.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
-        txtMarca.setForeground(new java.awt.Color(255, 255, 255));
-        txtMarca.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        txtMarca.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        txtMarca.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        panelDatos.add(txtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 280, 150, 30));
 
         jlbMarca.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
         jlbMarca.setForeground(new java.awt.Color(255, 255, 255));
@@ -689,16 +692,32 @@ public final class frmInventario extends javax.swing.JFrame {
     private void txtFiltrarCategoriaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltrarCategoriaKeyReleased
         Filtrar();
     }//GEN-LAST:event_txtFiltrarCategoriaKeyReleased
-
+    int idc;
     private void JTProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTProductosMouseClicked
         int fila = JTProductos.getSelectedRow();
         MostrarDatos("id", String.valueOf(Integer.parseInt((String) JTProductos.getValueAt(fila, 0).toString())));
+        idc = Integer.parseInt((String) JTProductos.getValueAt(fila, 0).toString());
         if (evt.getClickCount() == 2) {
             //OTRA ACCION
             //[sede:2;id:1;dni:71829321;fecha:17/03/2023],{productos:[idProducto:13.89:12],[idProducto:20.00:15],[idProducto:13.20:21]...},[total:200]
             //FORMATO GUARDADO
         }
     }//GEN-LAST:event_JTProductosMouseClicked
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        int dialog = JOptionPane.YES_NO_OPTION;
+        int result = JOptionPane.showConfirmDialog(null, "Confirma los cambios", "msg", dialog);
+        if (result == 0) {
+            Crud c = new Crud();
+            String columnas[] = {"codigo", "nombre", "stock", "precio", "marca", "categoria"};
+            String datosInsertar[] = {txtCodigo.getText(), txtNombre.getText(), txtStock.getText(), txtPrecio.getText(), txtMarca.getText(), txtCategoria.getText()};
+            Crud.modificarDatos(daoLogin.NOMBRE_TABLA_SEDE, columnas, datosInsertar, idc);
+            Proceso ic = new Proceso();
+            VaciarTextLabelDatos();
+            JOptionPane.showMessageDialog(null, "Datos modificados correctamente","Msg",JOptionPane.PLAIN_MESSAGE,ic.icono("/com/img/iconos/actualizar.png"));
+        }
+
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -731,6 +750,7 @@ public final class frmInventario extends javax.swing.JFrame {
     private javax.swing.JLabel FONDO;
     private com.formato.UIDesing.TableDark JTProductos;
     private javax.swing.JLabel MarcoImagen;
+    private javax.swing.JButton btnActualizar;
     public static javax.swing.JButton btnAgregarNuevo;
     public static javax.swing.JButton btnAtras;
     private javax.swing.JButton btnLimpiar;
@@ -769,17 +789,17 @@ public final class frmInventario extends javax.swing.JFrame {
     private javax.swing.JLabel separador6;
     private javax.swing.JLabel separador8;
     private javax.swing.JLabel separador9;
-    private javax.swing.JLabel txtCategoria;
-    private javax.swing.JLabel txtCodigo;
+    private javax.swing.JTextField txtCategoria;
+    private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtFiltrarCategoria;
     private javax.swing.JTextField txtFiltrarCodigo;
     private javax.swing.JTextField txtFiltrarMarca;
     private javax.swing.JTextField txtFiltrarNombre;
     private javax.swing.JTextField txtFiltrarPrecio;
     private javax.swing.JTextField txtFiltrarStock;
-    private javax.swing.JLabel txtMarca;
-    private javax.swing.JLabel txtNombre;
-    private javax.swing.JLabel txtPrecio;
-    private javax.swing.JLabel txtStock;
+    private javax.swing.JTextField txtMarca;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtPrecio;
+    private javax.swing.JTextField txtStock;
     // End of variables declaration//GEN-END:variables
 }

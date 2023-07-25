@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import com.formato.procesos.Proceso;
 import com.dao.InnerJoin.daoLogin;
 import com.formato.procesos.Data;
+import com.ventanas.TRABAJADOR.frm_Principal_TRABAJADOR;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
@@ -393,9 +394,15 @@ public final class frm_Login extends javax.swing.JFrame {
         if (entrar) {
             if (autenticarUsuarioSede()) {
                 daoLogin.guardarDatos();
-                frm_Principal abrir = new frm_Principal();
-                abrir.setVisible(true);
-                this.hide();
+                if (daoLogin.CARGO.equalsIgnoreCase("administrador")) {
+                    frm_Principal abrir = new frm_Principal();
+                    abrir.setVisible(true);
+                    this.hide();
+                } else {
+                    frm_Principal_TRABAJADOR abrir = new frm_Principal_TRABAJADOR();
+                    abrir.setVisible(true);
+                    this.hide();
+                }
             }
         }
     }

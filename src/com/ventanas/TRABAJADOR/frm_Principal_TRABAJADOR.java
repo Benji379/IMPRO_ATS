@@ -1,16 +1,13 @@
-package com.ventanas.administrador;
+package com.ventanas.TRABAJADOR;
 
-import com.ventanas.administrador.ventas.menuVentas;
-import com.formato.procesos.Clima;
+import com.formato.procesos.Clima_TRABAJADOR;
 import com.dao.InnerJoin.daoLogin;
 import com.formato.procesos.Data;
 import com.formato.procesos.Proceso;
-import com.ventanas.administrador.trabajadores.menuTrabajadores;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
-import com.ventanas.generales.panel_Bienvenida;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
@@ -20,7 +17,7 @@ import javax.swing.JFrame;
  *
  * @author Benji
  */
-public final class frm_Principal extends javax.swing.JFrame {
+public final class frm_Principal_TRABAJADOR extends javax.swing.JFrame {
 
     String rango = daoLogin.CARGO;
     String genero = daoLogin.GENERO;
@@ -30,7 +27,7 @@ public final class frm_Principal extends javax.swing.JFrame {
     String codigo = daoLogin.CODIGO;
     String NSede = Data.getSede();
 
-    public frm_Principal() {
+    public frm_Principal_TRABAJADOR() {
         initComponents();
         DiseñoInicial();
         AbrirPanelBienvenida();
@@ -40,16 +37,16 @@ public final class frm_Principal extends javax.swing.JFrame {
     public void AbrirPanelBienvenida() {
         panelInicio();
         mostrarDatosUsuario();
-        Clima.Clima();
+        Clima_TRABAJADOR.Clima();
         fotoDePerfil();
         contenedor.setOpaque(false);
     }
 
     public void mostrarDatosUsuario() {
-        panel_Bienvenida.txtNombreCompleto.setText(nombre + " " + apellidos);
-        panel_Bienvenida.txtCorreo.setText(correo);
-        panel_Bienvenida.txtCodigo.setText(codigo);
-        panel_Bienvenida.txtSede.setText("Sede " + NSede);
+        panel_Bienvenida_TRABAJADOR.txtNombreCompleto.setText(nombre + " " + apellidos);
+        panel_Bienvenida_TRABAJADOR.txtCorreo.setText(correo);
+        panel_Bienvenida_TRABAJADOR.txtCodigo.setText(codigo);
+        panel_Bienvenida_TRABAJADOR.txtSede.setText("Sede " + NSede);
     }
 
     private void DiseñoInicial() {
@@ -61,7 +58,7 @@ public final class frm_Principal extends javax.swing.JFrame {
     }
 
     private void panelInicio() {
-        panel_Bienvenida p = new panel_Bienvenida();
+        panel_Bienvenida_TRABAJADOR p = new panel_Bienvenida_TRABAJADOR();
         p.setSize(960, 590);
         p.setLocation(0, 0);
         contenedor.removeAll();
@@ -74,16 +71,16 @@ public final class frm_Principal extends javax.swing.JFrame {
     public void fotoDePerfil() {
         String direccion = "/com/img/paneles/";
         if (rango.equalsIgnoreCase("Administrador")) {
-            panel_Bienvenida.perfilUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource(direccion + "PerfilUsuarioAdmin.png")));
-            panel_Bienvenida.rangoUsuario.setText("Admin");
+            panel_Bienvenida_TRABAJADOR.perfilUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource(direccion + "PerfilUsuarioAdmin.png")));
+            panel_Bienvenida_TRABAJADOR.rangoUsuario.setText("Admin");
         } else {
             if (rango.equalsIgnoreCase("trabajador")) {
-                panel_Bienvenida.rangoUsuario.setText("Trabajador");
+                panel_Bienvenida_TRABAJADOR.rangoUsuario.setText("Trabajador");
                 if (genero.equalsIgnoreCase("m")) {
-                    panel_Bienvenida.perfilUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource(direccion + "PerfilUsuarioM.png")));
+                    panel_Bienvenida_TRABAJADOR.perfilUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource(direccion + "PerfilUsuarioM.png")));
                 } else {
                     if (genero.equalsIgnoreCase("f")) {
-                        panel_Bienvenida.perfilUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource(direccion + "PerfilUsuarioF.png")));
+                        panel_Bienvenida_TRABAJADOR.perfilUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource(direccion + "PerfilUsuarioF.png")));
                     }
                 }
             }
@@ -95,18 +92,15 @@ public final class frm_Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         MenuBar = new javax.swing.JPanel();
-        btnBlockNotas = new javax.swing.JButton();
-        btnExcel = new javax.swing.JButton();
-        btnCalculadora = new javax.swing.JButton();
-        btnCorreo = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         btnMinimizar = new javax.swing.JButton();
         GENERAL = new javax.swing.JPanel();
+        btnCalculadora = new javax.swing.JButton();
+        btnCorreo = new javax.swing.JButton();
+        btnBlockNotas = new javax.swing.JButton();
+        btnExcel = new javax.swing.JButton();
         BarraTitulo = new javax.swing.JLabel();
         btnLogo = new javax.swing.JButton();
-        btnTrabajadores = new javax.swing.JButton();
         btnVentas = new javax.swing.JButton();
-        btnProductos = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         FondoModulos = new javax.swing.JLabel();
         contenedor = new javax.swing.JPanel();
@@ -120,86 +114,6 @@ public final class frm_Principal extends javax.swing.JFrame {
 
         MenuBar.setBackground(new java.awt.Color(30, 30, 30));
         MenuBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btnBlockNotas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/MenuNotas.png"))); // NOI18N
-        btnBlockNotas.setBorder(null);
-        btnBlockNotas.setBorderPainted(false);
-        btnBlockNotas.setContentAreaFilled(false);
-        btnBlockNotas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnBlockNotas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnBlockNotas.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/MenuNotasPress.png"))); // NOI18N
-        btnBlockNotas.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/MenuNotasSelect.png"))); // NOI18N
-        btnBlockNotas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnBlockNotasMouseClicked(evt);
-            }
-        });
-        btnBlockNotas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBlockNotasActionPerformed(evt);
-            }
-        });
-        MenuBar.add(btnBlockNotas, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 120, 70));
-
-        btnExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/MenuExcel.png"))); // NOI18N
-        btnExcel.setBorder(null);
-        btnExcel.setBorderPainted(false);
-        btnExcel.setContentAreaFilled(false);
-        btnExcel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnExcel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnExcel.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/MenuExcelPress.png"))); // NOI18N
-        btnExcel.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/MenuExcelSelect.png"))); // NOI18N
-        btnExcel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExcelActionPerformed(evt);
-            }
-        });
-        MenuBar.add(btnExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, 120, 70));
-
-        btnCalculadora.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/MenuCalculadora.png"))); // NOI18N
-        btnCalculadora.setBorder(null);
-        btnCalculadora.setBorderPainted(false);
-        btnCalculadora.setContentAreaFilled(false);
-        btnCalculadora.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnCalculadora.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnCalculadora.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/MenuCalculadoraPress.png"))); // NOI18N
-        btnCalculadora.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/MenuCalculadoraSelect.png"))); // NOI18N
-        btnCalculadora.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCalculadoraActionPerformed(evt);
-            }
-        });
-        MenuBar.add(btnCalculadora, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, 120, 70));
-
-        btnCorreo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/menuCorreo.png"))); // NOI18N
-        btnCorreo.setBorder(null);
-        btnCorreo.setBorderPainted(false);
-        btnCorreo.setContentAreaFilled(false);
-        btnCorreo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnCorreo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnCorreo.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/menuCorreoPress.png"))); // NOI18N
-        btnCorreo.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/menuCorreoSelect.png"))); // NOI18N
-        btnCorreo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCorreoActionPerformed(evt);
-            }
-        });
-        MenuBar.add(btnCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 10, 120, 70));
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/menuConfiguracion.png"))); // NOI18N
-        jButton2.setBorder(null);
-        jButton2.setBorderPainted(false);
-        jButton2.setContentAreaFilled(false);
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/menuConfiguracionPress.png"))); // NOI18N
-        jButton2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/menuConfiguracionSelect.png"))); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        MenuBar.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 10, 120, 70));
 
         btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/btnMinimizar.png"))); // NOI18N
         btnMinimizar.setBorder(null);
@@ -219,6 +133,71 @@ public final class frm_Principal extends javax.swing.JFrame {
 
         GENERAL.setBackground(new java.awt.Color(0, 255, 51));
         GENERAL.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnCalculadora.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/MenuCalculadora.png"))); // NOI18N
+        btnCalculadora.setBorder(null);
+        btnCalculadora.setBorderPainted(false);
+        btnCalculadora.setContentAreaFilled(false);
+        btnCalculadora.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCalculadora.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCalculadora.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/MenuCalculadoraPress.png"))); // NOI18N
+        btnCalculadora.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/MenuCalculadoraSelect.png"))); // NOI18N
+        btnCalculadora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalculadoraActionPerformed(evt);
+            }
+        });
+        GENERAL.add(btnCalculadora, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 490, 120, 70));
+
+        btnCorreo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/menuCorreo.png"))); // NOI18N
+        btnCorreo.setBorder(null);
+        btnCorreo.setBorderPainted(false);
+        btnCorreo.setContentAreaFilled(false);
+        btnCorreo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCorreo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCorreo.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/menuCorreoPress.png"))); // NOI18N
+        btnCorreo.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/menuCorreoSelect.png"))); // NOI18N
+        btnCorreo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCorreoActionPerformed(evt);
+            }
+        });
+        GENERAL.add(btnCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 490, 120, 70));
+
+        btnBlockNotas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/MenuNotas.png"))); // NOI18N
+        btnBlockNotas.setBorder(null);
+        btnBlockNotas.setBorderPainted(false);
+        btnBlockNotas.setContentAreaFilled(false);
+        btnBlockNotas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBlockNotas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnBlockNotas.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/MenuNotasPress.png"))); // NOI18N
+        btnBlockNotas.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/MenuNotasSelect.png"))); // NOI18N
+        btnBlockNotas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBlockNotasMouseClicked(evt);
+            }
+        });
+        btnBlockNotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBlockNotasActionPerformed(evt);
+            }
+        });
+        GENERAL.add(btnBlockNotas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 120, 70));
+
+        btnExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/MenuExcel.png"))); // NOI18N
+        btnExcel.setBorder(null);
+        btnExcel.setBorderPainted(false);
+        btnExcel.setContentAreaFilled(false);
+        btnExcel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnExcel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnExcel.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/MenuExcelPress.png"))); // NOI18N
+        btnExcel.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/MenuExcelSelect.png"))); // NOI18N
+        btnExcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcelActionPerformed(evt);
+            }
+        });
+        GENERAL.add(btnExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 380, 120, 70));
 
         BarraTitulo.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -246,21 +225,6 @@ public final class frm_Principal extends javax.swing.JFrame {
         });
         GENERAL.add(btnLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 180, 180));
 
-        btnTrabajadores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/btnTrabajadores.png"))); // NOI18N
-        btnTrabajadores.setBorder(null);
-        btnTrabajadores.setBorderPainted(false);
-        btnTrabajadores.setContentAreaFilled(false);
-        btnTrabajadores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnTrabajadores.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnTrabajadores.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/btnTrabajadoresPress.png"))); // NOI18N
-        btnTrabajadores.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/btnTrabajadoresSelect.png"))); // NOI18N
-        btnTrabajadores.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTrabajadoresActionPerformed(evt);
-            }
-        });
-        GENERAL.add(btnTrabajadores, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 220, 80));
-
         btnVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/btnVentas.png"))); // NOI18N
         btnVentas.setBorder(null);
         btnVentas.setBorderPainted(false);
@@ -274,22 +238,7 @@ public final class frm_Principal extends javax.swing.JFrame {
                 btnVentasActionPerformed(evt);
             }
         });
-        GENERAL.add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 220, 80));
-
-        btnProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/btnProductos.png"))); // NOI18N
-        btnProductos.setBorder(null);
-        btnProductos.setBorderPainted(false);
-        btnProductos.setContentAreaFilled(false);
-        btnProductos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnProductos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnProductos.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/btnProductosPress.png"))); // NOI18N
-        btnProductos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/btnProductosSelect.png"))); // NOI18N
-        btnProductos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProductosActionPerformed(evt);
-            }
-        });
-        GENERAL.add(btnProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 490, 220, 80));
+        GENERAL.add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 220, 80));
 
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/btnSalir.png"))); // NOI18N
         btnSalir.setBorder(null);
@@ -343,19 +292,8 @@ public final class frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnMinimizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinimizarActionPerformed
-        this.setState(frm_Principal.ICONIFIED);
+        this.setState(frm_Principal_TRABAJADOR.ICONIFIED);
     }//GEN-LAST:event_btnMinimizarActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        config abrir = new config();
-        abrir.setSize(960, 590);
-        abrir.setLocation(0, 0);
-        contenedor.removeAll();
-        contenedor.add(abrir, BorderLayout.CENTER);
-        contenedor.revalidate();
-        contenedor.repaint();
-        setTitle("IMPRO_ATS [Configuracion]");
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btnCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCorreoActionPerformed
         abrirCorreo();
@@ -370,19 +308,8 @@ public final class frm_Principal extends javax.swing.JFrame {
         AbrirPanelBienvenida();
     }//GEN-LAST:event_btnLogoActionPerformed
 
-    private void btnTrabajadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrabajadoresActionPerformed
-        menuTrabajadores abrir = new menuTrabajadores();
-        abrir.setSize(960, 590);
-        abrir.setLocation(0, 0);
-        contenedor.removeAll();
-        contenedor.add(abrir, BorderLayout.CENTER);
-        contenedor.revalidate();
-        contenedor.repaint();
-        setTitle("IMPRO_ATS [Trabajadores]");
-    }//GEN-LAST:event_btnTrabajadoresActionPerformed
-
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
-        menuVentas abrir = new menuVentas();
+        menuVentasTrabajador abrir = new menuVentasTrabajador();
         abrir.setSize(960, 590);
         abrir.setLocation(0, 0);
         contenedor.removeAll();
@@ -391,12 +318,6 @@ public final class frm_Principal extends javax.swing.JFrame {
         contenedor.repaint();
         setTitle("IMPRO_ATS [Ventas]");
     }//GEN-LAST:event_btnVentasActionPerformed
-
-    private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
-        frmInventario abrir = new frmInventario();
-        abrir.setVisible(true);
-        hide();
-    }//GEN-LAST:event_btnProductosActionPerformed
 
     private void btnBlockNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBlockNotasActionPerformed
         Proceso.AccederEnlace("notepad");
@@ -411,9 +332,9 @@ public final class frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExcelActionPerformed
 
     public static void abrirCorreo() {
-        chat abrir;
+        chat_TRABAJADOR abrir;
         try {
-            abrir = new chat();
+            abrir = new chat_TRABAJADOR();
             abrir.setSize(960, 590);
             abrir.setLocation(0, 0);
             contenedor.removeAll();
@@ -464,14 +385,16 @@ public final class frm_Principal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frm_Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frm_Principal_TRABAJADOR.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new frm_Principal().setVisible(true);
+            new frm_Principal_TRABAJADOR().setVisible(true);
         });
     }
 
@@ -487,11 +410,8 @@ public final class frm_Principal extends javax.swing.JFrame {
     public static javax.swing.JButton btnExcel;
     public static javax.swing.JButton btnLogo;
     public static javax.swing.JButton btnMinimizar;
-    public static javax.swing.JButton btnProductos;
     public static javax.swing.JButton btnSalir;
-    public static javax.swing.JButton btnTrabajadores;
     public static javax.swing.JButton btnVentas;
     public static javax.swing.JPanel contenedor;
-    public static javax.swing.JButton jButton2;
     // End of variables declaration//GEN-END:variables
 }

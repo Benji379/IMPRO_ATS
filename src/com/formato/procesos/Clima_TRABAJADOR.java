@@ -1,7 +1,6 @@
 package com.formato.procesos;
 
 import com.ventanas.TRABAJADOR.panel_Bienvenida_TRABAJADOR;
-import com.ventanas.generales.panel_Bienvenida;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -15,7 +14,7 @@ import org.json.simple.JSONObject;
  *
  * @author Benji
  */
-public class Clima implements ActionListener {
+public class Clima_TRABAJADOR implements ActionListener {
 
     public static void Clima() {
         String city = "Lima";
@@ -54,14 +53,14 @@ public class Clima implements ActionListener {
 //            System.out.println("Período del día: " + dayTime);
 
             //IMPRIMO EN LOS PANELES de BIEVENIDA
-            panel_Bienvenida.txtTemperatura.setText(String.valueOf(Math.round(temperatureCelsius)));
-            panel_Bienvenida.txtHumedad.setText("Humedad: " + humidity + "%");
-            panel_Bienvenida.txtViento.setText("Viento: a " + Math.round(windSpeedKph) + " km/h");
-            panel_Bienvenida.txtEstado.setText(weatherState);
-            panel_Bienvenida.txtCiudad.setText(city);
+            panel_Bienvenida_TRABAJADOR.txtTemperatura.setText(String.valueOf(Math.round(temperatureCelsius)));
+            panel_Bienvenida_TRABAJADOR.txtHumedad.setText("Humedad: " + humidity + "%");
+            panel_Bienvenida_TRABAJADOR.txtViento.setText("Viento: a " + Math.round(windSpeedKph) + " km/h");
+            panel_Bienvenida_TRABAJADOR.txtEstado.setText(weatherState);
+            panel_Bienvenida_TRABAJADOR.txtCiudad.setText(city);
 
-            ImageIcon nuevoIcono = new ImageIcon(Clima.class.getResource("/com/img/Clima/" + weatherDescription + ".png"));
-            panel_Bienvenida.imgClima.setIcon(nuevoIcono);
+            ImageIcon nuevoIcono = new ImageIcon(Clima_TRABAJADOR.class.getResource("/com/img/Clima/" + weatherDescription + ".png"));
+            panel_Bienvenida_TRABAJADOR.imgClima.setIcon(nuevoIcono);
 
         } else {
             System.out.println("No se pudo obtener la información del clima.");
@@ -107,7 +106,7 @@ public class Clima implements ActionListener {
         Calendar hoy = Calendar.getInstance();
         String horaMinutos = String.format(format.format(hora), hoy);
         String dia = Proceso.getDiaSemana();
-        panel_Bienvenida.txtDiaHora.setText(dia + ", " + horaMinutos);
+        panel_Bienvenida_TRABAJADOR.txtDiaHora.setText(dia + ", " + horaMinutos);
     }
 
 }

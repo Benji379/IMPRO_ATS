@@ -3,6 +3,7 @@ package com.formato.procesos;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -268,4 +269,9 @@ public class Proceso {
         return img;
     }
 
+    public static double redondear(double numero){
+        String resultado = String.format("%.2f", numero).replace(',', '.');
+        return Double.parseDouble(resultado);
+    }
+    
 }
