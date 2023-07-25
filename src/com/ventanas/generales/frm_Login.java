@@ -29,6 +29,8 @@ public final class frm_Login extends javax.swing.JFrame {
         cerrar();
         EscrituraAnimada k = new EscrituraAnimada();
         k.mostrarTextoAnimado(txtTitulo, "Login", 120);
+//        txtUsuario.setSelectionColor(new Color(255,255,255));
+//        txtContraseña.setSelectionColor(new Color(255, 255, 255));
     }
 
     private void MisDefault() {
@@ -143,6 +145,8 @@ public final class frm_Login extends javax.swing.JFrame {
 
         txtContraseña.setFont(new java.awt.Font("DialogInput", 0, 19)); // NOI18N
         txtContraseña.setBorder(null);
+        txtContraseña.setSelectedTextColor(new java.awt.Color(0, 0, 0));
+        txtContraseña.setSelectionColor(new java.awt.Color(204, 204, 204));
         txtContraseña.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtContraseñaFocusGained(evt);
@@ -163,6 +167,8 @@ public final class frm_Login extends javax.swing.JFrame {
 
         txtUsuario.setFont(new java.awt.Font("DialogInput", 0, 19)); // NOI18N
         txtUsuario.setBorder(null);
+        txtUsuario.setSelectedTextColor(new java.awt.Color(0, 0, 0));
+        txtUsuario.setSelectionColor(new java.awt.Color(204, 204, 204));
         txtUsuario.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtUsuarioFocusGained(evt);

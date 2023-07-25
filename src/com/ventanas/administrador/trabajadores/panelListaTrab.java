@@ -2,13 +2,11 @@ package com.ventanas.administrador.trabajadores;
 
 import com.dao.ConexionBd.ConexionSQL;
 import com.dao.InnerJoin.CrudJTable;
-import com.dao.InnerJoin.DatosTabla;
 import com.formato.procesos.Proceso;
 import com.formato.procesos.filtrarDatos;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -16,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JScrollBar;
 import javax.swing.table.DefaultTableModel;
-import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import scrollbar.ScrollBarCustom;
 
 /**

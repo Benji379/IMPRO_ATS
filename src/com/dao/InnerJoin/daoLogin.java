@@ -75,7 +75,8 @@ public class daoLogin {
                 }
             }
             if (existe == 0) {
-                System.out.println("TRABAJADOR NO EXISTE");
+//                System.out.println("TRABAJADOR NO EXISTE");
+                return "0.0";
             }
 
         } catch (HeadlessException | SQLException e) {

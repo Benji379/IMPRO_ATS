@@ -3,8 +3,10 @@ package com.formato.procesos;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import javax.imageio.ImageIO;
 
 public class ImageUtils {
 
@@ -54,5 +56,18 @@ public class ImageUtils {
         }
         return url;
     }
+
+    public static void setPonerImagenAjustarLabel(JLabel label, String imagePath) throws IOException {
+        // Cargar la imagen desde el archivo
+        BufferedImage originalImage = ImageIO.read(new File(imagePath));
+        // Obtener las dimensiones del JLabel
+        int labelWidth = label.getWidth();
+        int labelHeight = label.getHeight();
+        // Escalar la imagen al tamaño del JLabel
+        Image scaledImage = originalImage.getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
+        // Crear un ImageIcon a partir de la imagen escalada
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        // Establecer el ImageIcon en el JLabel
+        label.setIcon(scaledIcon);
+    }
 }
-    

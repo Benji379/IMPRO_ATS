@@ -1,6 +1,7 @@
 package com.ventanas.administrador;
 
 import com.dao.InnerJoin.CrudJTable;
+import com.dao.InnerJoin.RellenarComboBox;
 import com.dao.InnerJoin.daoLogin;
 import com.formato.UIDesing.JScrollPaneUtils;
 import com.formato.procesos.ImageUtils;
@@ -691,8 +692,11 @@ public final class frmInventario extends javax.swing.JFrame {
 
     private void JTProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTProductosMouseClicked
         int fila = JTProductos.getSelectedRow();
+        MostrarDatos("id", String.valueOf(Integer.parseInt((String) JTProductos.getValueAt(fila, 0).toString())));
         if (evt.getClickCount() == 2) {
-            MostrarDatos("id", String.valueOf(Integer.parseInt((String) JTProductos.getValueAt(fila, 0).toString())));
+            //OTRA ACCION
+            //[sede:2;id:1;dni:71829321;fecha:17/03/2023],{productos:[idProducto:13.89:12],[idProducto:20.00:15],[idProducto:13.20:21]...},[total:200]
+            //FORMATO GUARDADO
         }
     }//GEN-LAST:event_JTProductosMouseClicked
 

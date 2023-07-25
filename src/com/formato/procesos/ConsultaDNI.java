@@ -17,10 +17,11 @@ public class ConsultaDNI {
 
     public ConsultaDNI(String dni) {
         this.dni = dni;
-        nombres="";
-        apellidoP="";
-        apellidoM="";
+        nombres = "";
+        apellidoP = "";
+        apellidoM = "";
     }
+    Proceso ic = new Proceso();
 
     public void ConsultaDNI() {
         BufferedReader reader = null;
@@ -30,7 +31,7 @@ public class ConsultaDNI {
             reader = new BufferedReader(new InputStreamReader(apiURL.openStream()));
             StringBuilder response = new StringBuilder();
             String line;
-            
+
             while ((line = reader.readLine()) != null) {
                 response.append(line);
             }
@@ -44,10 +45,10 @@ public class ConsultaDNI {
                 this.apellidoM = data.getString("apellidoMaterno");
             } else {
                 String mensage = data.getString("message");
-                JOptionPane.showMessageDialog(null, mensage, "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, mensage, "Error", JOptionPane.ERROR_MESSAGE, ic.icono("/com/img/emergentes/dni.png"));
             }
         } catch (IOException | JSONException e) {
-            JOptionPane.showMessageDialog(null, "DNI inválido", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "DNI inválido", "Error", JOptionPane.ERROR_MESSAGE, ic.icono("/com/img/emergentes/dni.png"));
         } finally {
             if (reader != null) {
                 try {
@@ -66,7 +67,7 @@ public class ConsultaDNI {
     public String getApellidoP() {
         return apellidoP;
     }
-    
+
     public String getApellidoM() {
         return apellidoM;
     }

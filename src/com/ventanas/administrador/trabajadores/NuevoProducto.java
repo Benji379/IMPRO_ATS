@@ -3,7 +3,7 @@ package com.ventanas.administrador.trabajadores;
 import com.dao.InnerJoin.Crud;
 import com.dao.InnerJoin.DatabaseUtils;
 import com.dao.InnerJoin.daoLogin;
-import com.format.jnafilechooser.api.JnaFileChooser;
+import com.formato.jnafilechooser.api.JnaFileChooser;
 import com.formato.procesos.BarcodeGenerator;
 import static com.formato.procesos.EditableComboBoxUtil.makeEditableComboBox;
 import com.formato.procesos.ImageUtils;
@@ -487,7 +487,7 @@ public class NuevoProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCodigoKeyTyped
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
-        Proceso.limitacionCaracteres(txtNombre, evt, 30, true);
+        Proceso.limitacionCaracteres(txtNombre, evt, 60, true);
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtStockKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtStockKeyTyped

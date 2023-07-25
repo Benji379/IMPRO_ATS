@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Boleta Estilo 8mm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Estilos para el encabezado del título */
+        .titulo-container {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .logo {
+            max-width: 50px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .titulo {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        
+        /* Estilos para la tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 5px;
+            text-align: center;
+        }
+
+        th {
+            font-weight: bold;
+        }
+
+        /* Estilos para los asteriscos */
+        .asteriscos {
+            font-size: 20px;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Título y logo -->
+    <div class="titulo-container">
+        <div class="asteriscos"><br><br></div>
+        <div class="titulo">********** BOLETA **********</div>
+        <div class="asteriscos">******************************</div>
+    </div>
+
+    <!-- Tabla -->
+    <table>
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Puedes repetir esta fila para agregar más productos -->
+            <tr>
+                <td>Producto 1</td>
+                <td>2</td>
+                <td>$20.00</td>
+            </tr>
+            <tr>
+                <td>Producto 2</td>
+                <td>1</td>
+                <td>$15.00</td>
+            </tr>
+            <!-- Fin de filas de productos -->
+        </tbody>
+    </table>
+</body>
+</html>

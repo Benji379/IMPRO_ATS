@@ -1,5 +1,6 @@
 package com.ventanas.administrador;
 
+import com.ventanas.administrador.ventas.menuVentas;
 import com.formato.procesos.Clima;
 import com.dao.InnerJoin.daoLogin;
 import com.formato.procesos.Data;
@@ -385,7 +386,14 @@ public final class frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
-        // TODO add your handling code here:
+        menuVentas abrir = new menuVentas();
+        abrir.setSize(960, 590);
+        abrir.setLocation(0, 0);
+        contenedor.removeAll();
+        contenedor.add(abrir, BorderLayout.CENTER);
+        contenedor.revalidate();
+        contenedor.repaint();
+        setTitle("IMPRO_ATS [Ventas]");
     }//GEN-LAST:event_btnVentasActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
@@ -460,23 +468,23 @@ public final class frm_Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel BarraTitulo;
-    private javax.swing.JLabel FONDO;
-    private javax.swing.JLabel FondoModulos;
-    private javax.swing.JPanel GENERAL;
-    private javax.swing.JPanel MenuBar;
-    private javax.swing.JButton btnBlockNotas;
-    private javax.swing.JButton btnCalculadora;
-    private javax.swing.JButton btnClientes;
-    private javax.swing.JButton btnCorreo;
-    private javax.swing.JButton btnExcel;
-    private javax.swing.JButton btnLogo;
-    private javax.swing.JButton btnMinimizar;
-    private javax.swing.JButton btnProductos;
-    private javax.swing.JButton btnSalir;
-    private javax.swing.JButton btnTrabajadores;
-    private javax.swing.JButton btnVentas;
+    public static javax.swing.JLabel BarraTitulo;
+    public static javax.swing.JLabel FONDO;
+    public static javax.swing.JLabel FondoModulos;
+    public static javax.swing.JPanel GENERAL;
+    public static javax.swing.JPanel MenuBar;
+    public static javax.swing.JButton btnBlockNotas;
+    public static javax.swing.JButton btnCalculadora;
+    public static javax.swing.JButton btnClientes;
+    public static javax.swing.JButton btnCorreo;
+    public static javax.swing.JButton btnExcel;
+    public static javax.swing.JButton btnLogo;
+    public static javax.swing.JButton btnMinimizar;
+    public static javax.swing.JButton btnProductos;
+    public static javax.swing.JButton btnSalir;
+    public static javax.swing.JButton btnTrabajadores;
+    public static javax.swing.JButton btnVentas;
     public static javax.swing.JPanel contenedor;
-    private javax.swing.JButton jButton2;
+    public static javax.swing.JButton jButton2;
     // End of variables declaration//GEN-END:variables
 }

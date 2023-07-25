@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -22,7 +24,7 @@ public class Proceso {
         String url = "C:\\Windows\\System32\\cmd.exe /K start " + enlace;
         try {
             Runtime.getRuntime().exec(url);
-        } catch (IOException ex) {
+        } catch (IOException e) {
         }
     }
 
@@ -33,11 +35,14 @@ public class Proceso {
     }
 
     public static boolean ComprobarTxtVacio(JTextField... txt) {
-        boolean vacio = false;
+        boolean vacio;
         for (JTextField text : txt) {
             vacio = text.getText().equals("");
+            if (vacio) {
+                return vacio;
+            }
         }
-        return vacio;
+        return false;
     }
 
     public static void comprobar2Iguales(JTextField txt, JTextField txt1, JLabel alerta) {
@@ -138,20 +143,32 @@ public class Proceso {
                 return false;
             }
         }
-
         return true;
     }
 
     public static void FechaActual(JLabel txtLabel) {
         Date fechaActual = new Date();
-        DateFormat formatoFecha = new SimpleDateFormat("dd-MM-YYYY");
+        DateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
         String fecha = formatoFecha.format(fechaActual);
         txtLabel.setText(fecha);
+    }
+
+    public static String FechaActual() {
+        Date fechaActual = new Date();
+        DateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+        String fecha = formatoFecha.format(fechaActual);
+        return fecha;
     }
 
     public static String obtenerFechaHoraActual() {
         Date fechaHora = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return formato.format(fechaHora);
+    }
+
+    public static String HoraActual() {
+        Date fechaHora = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("HH:mm:ss a");
         return formato.format(fechaHora);
     }
 
@@ -210,6 +227,7 @@ public class Proceso {
             text.setText("");
         }
     }
+
     public static void vaciarTxt(JLabel... txt) {
         for (JLabel text : txt) {
             text.setText("");
@@ -238,6 +256,16 @@ public class Proceso {
         }
 
         return resultado.toString().trim();
+    }
+
+    public Icon icono(String path, int width, int heigth) {
+        Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
+        return img;
+    }
+
+    public Icon icono(String path) {
+        Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH));
+        return img;
     }
 
 }

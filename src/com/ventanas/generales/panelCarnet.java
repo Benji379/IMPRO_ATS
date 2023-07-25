@@ -4,7 +4,7 @@ import com.formato.procesos.GeneradorQR;
 import com.formato.procesos.PrintPanel;
 import com.formato.procesos.Proceso;
 import com.dao.InnerJoin.daoLogin;
-import com.format.jnafilechooser.api.JnaFileChooser;
+import com.formato.jnafilechooser.api.JnaFileChooser;
 import java.awt.Color;
 
 /**

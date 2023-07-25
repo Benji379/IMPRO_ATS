@@ -295,10 +295,10 @@ public class config extends javax.swing.JPanel {
 
     private void btnGUARDARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGUARDARActionPerformed
         int dialog = JOptionPane.YES_NO_OPTION;
-        int result = JOptionPane.showConfirmDialog(null, "Se finalizará la sesion\nDesea guardar los Cambios?", "Mensaje", dialog);
+        int result = JOptionPane.showConfirmDialog(null, "Se finalizará la sesion\nDesea guardar los Cambios?", "Mensaje", dialog, JOptionPane.PLAIN_MESSAGE, ic.icono("/com/img/emergentes/configuracion.png"));
         if (result == 0) {
             Data.GuardarSede((String) comboSedes.getSelectedItem());
-            JOptionPane.showMessageDialog(null, "Programa Configurado");
+            JOptionPane.showMessageDialog(null, "Programa Configurado", "Mensaje", JOptionPane.PLAIN_MESSAGE, ic.icono("/com/img/emergentes/configuracion.png"));
             System.exit(0);
         }
 
@@ -311,14 +311,14 @@ public class config extends javax.swing.JPanel {
     private void comboEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEstadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboEstadoActionPerformed
-
+    Proceso ic = new Proceso();
     private void btnRegistrarSedeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarSedeActionPerformed
         if (Integer.parseInt(txtNuevaSede.getText()) < DatabaseUtils.obtenerUltimoValorID("sedes", "sede") + 1) {
             JOptionPane.showMessageDialog(null, "No se puede registrar una sede existente", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             if (!txtDireccion.getText().equals("")) {
                 int dialog = JOptionPane.YES_NO_OPTION;
-                int result = JOptionPane.showConfirmDialog(null, "Desea Registrar Nueva Sede?", "Mensaje", dialog);
+                int result = JOptionPane.showConfirmDialog(null, "Desea Registrar Nueva Sede?", "Mensaje", dialog, JOptionPane.PLAIN_MESSAGE, ic.icono("/com/img/emergentes/preguntaNuevaSede.png"));
                 if (result == 0) {
                     String horaFechaActual = Proceso.obtenerFechaHoraActual();
                     String columnas[] = {"ubicacion", "fechaApertura", "estado"};
@@ -327,6 +327,7 @@ public class config extends javax.swing.JPanel {
                     String encabezados[] = {"id", "codigo", "nombre", "stock", "precio", "categoria", "marca", "urlImagen"};
                     Crud.crearTabla(nombreNuevaSede, encabezados);
                     Consultar();
+                    JOptionPane.showMessageDialog(null, "Nueva Sede", "Mensaje", JOptionPane.PLAIN_MESSAGE, ic.icono("/com/img/emergentes/nuevaSede.png"));
                     NuevoRegistro();
                 }
             } else {
@@ -351,8 +352,6 @@ public class config extends javax.swing.JPanel {
                 NuevoRegistro();
             }
         }
-
-
     }//GEN-LAST:event_btnModificarSedeActionPerformed
 
     private void JTSedesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTSedesMouseClicked
