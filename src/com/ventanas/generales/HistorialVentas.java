@@ -32,7 +32,6 @@ public final class HistorialVentas extends javax.swing.JPanel {
 //        FilterData.filterAndPopulateTable("ventas", JTVentas, hola(), fechaInicio, fechaFinal, "fecha");
         txtFechaInicio.setText("");
         txtFechaFinal.setText("");
-
     }
 
     private void Filtrar() {
