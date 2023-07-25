@@ -6,8 +6,10 @@ import com.dao.InnerJoin.daoLogin;
 import com.formato.UIDesing.JScrollPaneUtils;
 import com.formato.procesos.ConsultaDNI;
 import com.formato.procesos.Data;
+import com.formato.procesos.EnvioCorreo;
 import com.formato.procesos.JSON.GenerarRegistroJsonJTableVentas;
 import com.formato.procesos.JTableRellenar;
+import com.formato.procesos.JTableToHTMLConverter;
 import com.formato.procesos.Proceso;
 import com.ventanas.administrador.frm_Principal;
 import com.ventanas.administrador.ventas.inventarioEmergente;
@@ -101,12 +103,11 @@ public final class frmVenta extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btnFinalizarCompra = new javax.swing.JButton();
         btnBuscarProducto1 = new javax.swing.JButton();
-        btnBuscarProducto2 = new javax.swing.JButton();
         btnBuscarProducto3 = new javax.swing.JButton();
         btnBuscarDNI = new javax.swing.JButton();
         separadorGrande1 = new javax.swing.JLabel();
         jlbFacturacion = new javax.swing.JLabel();
-        btnEliminar1 = new javax.swing.JButton();
+        btnEnviarCorreo = new javax.swing.JButton();
         jlbCorreo = new javax.swing.JLabel();
         txtCorreo = new javax.swing.JTextField();
         separador2 = new javax.swing.JLabel();
@@ -145,7 +146,7 @@ public final class frmVenta extends javax.swing.JFrame {
         jlbTitulo = new javax.swing.JLabel();
         jlbDni = new javax.swing.JLabel();
         jScrollPaneTabla = new javax.swing.JScrollPane();
-        jTable1 = new com.formato.UIDesing.TableDark();
+        tablaProductos = new com.formato.UIDesing.TableDark();
         FONDO = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -214,21 +215,7 @@ public final class frmVenta extends javax.swing.JFrame {
                 btnBuscarProducto1ActionPerformed(evt);
             }
         });
-        jPanel1.add(btnBuscarProducto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 160, 60, 60));
-
-        btnBuscarProducto2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/Venta/btnDescargarPdf.png"))); // NOI18N
-        btnBuscarProducto2.setBorder(null);
-        btnBuscarProducto2.setBorderPainted(false);
-        btnBuscarProducto2.setContentAreaFilled(false);
-        btnBuscarProducto2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnBuscarProducto2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnBuscarProducto2.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/Venta/btnDescargarPdf_press.png"))); // NOI18N
-        btnBuscarProducto2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarProducto2ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnBuscarProducto2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 160, 60, 60));
+        jPanel1.add(btnBuscarProducto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 160, 60, 60));
 
         btnBuscarProducto3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/Venta/btnFacturaElectronica.png"))); // NOI18N
         btnBuscarProducto3.setBorder(null);
@@ -237,7 +224,7 @@ public final class frmVenta extends javax.swing.JFrame {
         btnBuscarProducto3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBuscarProducto3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnBuscarProducto3.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/Venta/btnFacturaElectronica_press.png"))); // NOI18N
-        jPanel1.add(btnBuscarProducto3, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 160, 60, 60));
+        jPanel1.add(btnBuscarProducto3, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 160, 60, 60));
 
         btnBuscarDNI.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/Venta/btnBuscarDNI.png"))); // NOI18N
         btnBuscarDNI.setBorder(null);
@@ -263,14 +250,19 @@ public final class frmVenta extends javax.swing.JFrame {
         jlbFacturacion.setText("FACTURACION");
         jPanel1.add(jlbFacturacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 30, 200, 40));
 
-        btnEliminar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/Venta/btnEnviarCorreo.png"))); // NOI18N
-        btnEliminar1.setBorder(null);
-        btnEliminar1.setBorderPainted(false);
-        btnEliminar1.setContentAreaFilled(false);
-        btnEliminar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEliminar1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnEliminar1.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/Venta/btnEnviarCorreo_press.png"))); // NOI18N
-        jPanel1.add(btnEliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 90, 70, 60));
+        btnEnviarCorreo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/Venta/btnEnviarCorreo.png"))); // NOI18N
+        btnEnviarCorreo.setBorder(null);
+        btnEnviarCorreo.setBorderPainted(false);
+        btnEnviarCorreo.setContentAreaFilled(false);
+        btnEnviarCorreo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEnviarCorreo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnEnviarCorreo.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/Venta/btnEnviarCorreo_press.png"))); // NOI18N
+        btnEnviarCorreo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarCorreoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnEnviarCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 90, 70, 60));
 
         jlbCorreo.setFont(new java.awt.Font("Century Schoolbook", 1, 22)); // NOI18N
         jlbCorreo.setForeground(new java.awt.Color(255, 255, 255));
@@ -510,7 +502,7 @@ public final class frmVenta extends javax.swing.JFrame {
         jlbDni.setText("DNI:");
         jPanel1.add(jlbDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 60, 40));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -526,7 +518,7 @@ public final class frmVenta extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPaneTabla.setViewportView(jTable1);
+        jScrollPaneTabla.setViewportView(tablaProductos);
 
         jPanel1.add(jScrollPaneTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 310, 480, 320));
 
@@ -592,8 +584,8 @@ public final class frmVenta extends javax.swing.JFrame {
 
                 // Buscar si ya existe una fila con el mismo código de producto en la tabla
                 int filaExistente = -1;
-                for (int row = 0; row < jTable1.getRowCount(); row++) {
-                    String codigoEnTabla = jTable1.getValueAt(row, 0).toString();
+                for (int row = 0; row < tablaProductos.getRowCount(); row++) {
+                    String codigoEnTabla = tablaProductos.getValueAt(row, 0).toString();
                     if (codigoProducto.equals(codigoEnTabla)) {
                         filaExistente = row;
                         break;
@@ -602,12 +594,12 @@ public final class frmVenta extends javax.swing.JFrame {
 
                 // Si existe una fila con el mismo código, actualizar la cantidad y el monto
                 if (filaExistente != -1) {
-                    int cantidadActualEnTabla = Integer.parseInt(jTable1.getValueAt(filaExistente, 2).toString());
+                    int cantidadActualEnTabla = Integer.parseInt(tablaProductos.getValueAt(filaExistente, 2).toString());
                     int totalCantidad = cantidadActualEnTabla + cantidadIngresada;
-                    jTable1.setValueAt(totalCantidad, filaExistente, 2); // Actualizar la cantidad
-                    double precio = Double.parseDouble(jTable1.getValueAt(filaExistente, 3).toString());
+                    tablaProductos.setValueAt(totalCantidad, filaExistente, 2); // Actualizar la cantidad
+                    double precio = Double.parseDouble(tablaProductos.getValueAt(filaExistente, 3).toString());
                     double monto = totalCantidad * precio; // Calcular el monto
-                    jTable1.setValueAt(String.format(Locale.US, "%.2f", monto), filaExistente, 4); // Actualizar el monto con 2 decimales y usando el punto como separador decimal
+                    tablaProductos.setValueAt(String.format(Locale.US, "%.2f", monto), filaExistente, 4); // Actualizar el monto con 2 decimales y usando el punto como separador decimal
                     bill_print();
                 } else {
                     // Si no existe una fila con el mismo código, agregar una nueva fila
@@ -621,7 +613,7 @@ public final class frmVenta extends javax.swing.JFrame {
                     double precio = Double.parseDouble(info[3]);
                     double monto = cantidad * precio;
                     info[4] = String.format(Locale.US, "%.2f", monto); // Formatear el monto con 2 decimales y usando el punto como separador decimal
-                    JTableRellenar.fillRowWithData(jTable1, info);
+                    JTableRellenar.fillRowWithData(tablaProductos, info);
                     bill_print();
                 }
                 // Actualizar el stock en la base de datos después de realizar la venta
@@ -629,8 +621,8 @@ public final class frmVenta extends javax.swing.JFrame {
                 actualizarStock(daoLogin.NOMBRE_TABLA_SEDE, "codigo", codigoProducto, "stock", String.valueOf(nuevoStock));
                 // Calcular el total y mostrarlo en el campo de texto "txtTotal"
                 double total = 0;
-                for (int row = 0; row < jTable1.getRowCount(); row++) {
-                    String montoStr = jTable1.getValueAt(row, 4).toString();
+                for (int row = 0; row < tablaProductos.getRowCount(); row++) {
+                    String montoStr = tablaProductos.getValueAt(row, 4).toString();
                     double monto = Double.parseDouble(montoStr.replace(",", ".")); // Reemplazar la coma por el punto para asegurar que los valores se sumen correctamente
                     total += monto;
                 }
@@ -689,10 +681,10 @@ public final class frmVenta extends javax.swing.JFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
 
         try {
-            int filaSeleccionada = jTable1.getSelectedRow();
+            int filaSeleccionada = tablaProductos.getSelectedRow();
             if (filaSeleccionada != -1) {
-                String codigoProductoEliminar = jTable1.getValueAt(filaSeleccionada, 0).toString();
-                int cantidadEliminar = Integer.parseInt(jTable1.getValueAt(filaSeleccionada, 2).toString());
+                String codigoProductoEliminar = tablaProductos.getValueAt(filaSeleccionada, 0).toString();
+                int cantidadEliminar = Integer.parseInt(tablaProductos.getValueAt(filaSeleccionada, 2).toString());
                 // Obtener el stock actual del producto desde la base de datos
                 int stockActual = Integer.parseInt(daoLogin.consultarRango(daoLogin.NOMBRE_TABLA_SEDE, "codigo", codigoProductoEliminar, "stock"));
                 // Calcular el nuevo stock después de eliminar la cantidad
@@ -700,12 +692,12 @@ public final class frmVenta extends javax.swing.JFrame {
                 // Actualizar el stock en la base de datos
                 actualizarStock(daoLogin.NOMBRE_TABLA_SEDE, "codigo", codigoProductoEliminar, "stock", String.valueOf(nuevoStock));
                 // Eliminar la fila seleccionada de la tabla visualmente
-                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                DefaultTableModel model = (DefaultTableModel) tablaProductos.getModel();
                 model.removeRow(filaSeleccionada);
                 // Actualizar la variable Total restando el monto del producto eliminado
                 double total = 0;
-                for (int row = 0; row < jTable1.getRowCount(); row++) {
-                    String montoStr = jTable1.getValueAt(row, 4).toString();
+                for (int row = 0; row < tablaProductos.getRowCount(); row++) {
+                    String montoStr = tablaProductos.getValueAt(row, 4).toString();
                     double monto = Double.parseDouble(montoStr.replace(",", ".")); // Reemplazar la coma por el punto para asegurar que los valores se sumen correctamente
                     total += monto;
                 }
@@ -728,7 +720,7 @@ public final class frmVenta extends javax.swing.JFrame {
 
     private String GenerarRegistroVenta() {
         GenerarRegistroJsonJTableVentas registroVentas = new GenerarRegistroJsonJTableVentas();
-        registroVentas.agregarProductoDesdeJTable(jTable1, 0, 3, 2);
+        registroVentas.agregarProductoDesdeJTable(tablaProductos, 0, 3, 2);
         String resultadoVentasJSON = registroVentas.generarRegistroVentasJSON();
         System.out.println("JSON: " + resultadoVentasJSON);
         return resultadoVentasJSON;
@@ -749,7 +741,7 @@ public final class frmVenta extends javax.swing.JFrame {
                 vuelto = 0.0;
                 dniCliente = "";
                 nombresCompleto = "";
-                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                DefaultTableModel model = (DefaultTableModel) tablaProductos.getModel();
                 model.setRowCount(0);
                 Proceso.vaciarTxt(txtCantidad, txtCodigo, txtCorreo, txtDni, txtEfectivo);
                 Proceso.vaciarTxt(txtNombres, txtApellidoP, txtApellidoM);
@@ -769,16 +761,19 @@ public final class frmVenta extends javax.swing.JFrame {
         ConfirmarCancelarCompra();
     }//GEN-LAST:event_formWindowClosing
 
-    private void btnBuscarProducto2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProducto2ActionPerformed
-
-    }//GEN-LAST:event_btnBuscarProducto2ActionPerformed
-
     private void txtCodigoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoFocusGained
 //        consultarPrecioProduc();
     }//GEN-LAST:event_txtCodigoFocusGained
 
+    private void btnEnviarCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarCorreoActionPerformed
+        String correoEnviar = txtCorreo.getText();
+        String asunto = "Compra Exitosa";
+        String mensage = JTableToHTMLConverter.convertToHTML(tablaProductos, Total, Efectivo, vuelto, (daoLogin.NOMBRE + " " + daoLogin.APELLIDOS), dniCliente, nombresCompleto,"https://st2.depositphotos.com/1662991/9938/i/450/depositphotos_99386326-stock-photo-woman-carrying-a-basket.jpg");
+        EnvioCorreo.EnviarEmail(correoEnviar, asunto, mensage);
+    }//GEN-LAST:event_btnEnviarCorreoActionPerformed
+
     private void cancelarCompra() {
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel model = (DefaultTableModel) tablaProductos.getModel();
         while (model.getRowCount() > 0) {
             String codigoProductoEliminar = model.getValueAt(0, 0).toString();
             int cantidadEliminar = Integer.parseInt(model.getValueAt(0, 2).toString());
@@ -864,8 +859,8 @@ public final class frmVenta extends javax.swing.JFrame {
         bill.setText(bill.getText() + String.format("%-26s%-23s%-10s%-10s%-10s", "Cod.", "Producto", "Cant", "Precio", "Monto") + "\n");
         bill.setText(bill.getText() + "--------------------------------------------------------------------------\n");
 
-        DefaultTableModel df = (DefaultTableModel) jTable1.getModel();
-        for (int i = 0; i < jTable1.getRowCount(); i++) {
+        DefaultTableModel df = (DefaultTableModel) tablaProductos.getModel();
+        for (int i = 0; i < tablaProductos.getRowCount(); i++) {
 
             String codigo = df.getValueAt(i, 0).toString();
             String producto = df.getValueAt(i, 1).toString();
@@ -911,10 +906,9 @@ public final class frmVenta extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscarDNI;
     private javax.swing.JButton btnBuscarProducto;
     private javax.swing.JButton btnBuscarProducto1;
-    private javax.swing.JButton btnBuscarProducto2;
     private javax.swing.JButton btnBuscarProducto3;
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnEliminar1;
+    private javax.swing.JButton btnEnviarCorreo;
     private javax.swing.JButton btnFinalizarCompra;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -922,7 +916,6 @@ public final class frmVenta extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPaneTabla;
     private javax.swing.JScrollPane jScrollPaneTextArea;
-    private com.formato.UIDesing.TableDark jTable1;
     private javax.swing.JLabel jlbApellidoM;
     private javax.swing.JLabel jlbApellidoP;
     private javax.swing.JLabel jlbCantidad;
@@ -942,6 +935,7 @@ public final class frmVenta extends javax.swing.JFrame {
     private javax.swing.JLabel separadorGrande;
     private javax.swing.JLabel separadorGrande1;
     private javax.swing.JLabel separadorGrande2;
+    private com.formato.UIDesing.TableDark tablaProductos;
     private javax.swing.JLabel txtApellidoM;
     private javax.swing.JLabel txtApellidoP;
     private javax.swing.JTextField txtCantidad;

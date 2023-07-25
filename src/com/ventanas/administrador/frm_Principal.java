@@ -104,7 +104,6 @@ public final class frm_Principal extends javax.swing.JFrame {
         BarraTitulo = new javax.swing.JLabel();
         btnLogo = new javax.swing.JButton();
         btnTrabajadores = new javax.swing.JButton();
-        btnClientes = new javax.swing.JButton();
         btnVentas = new javax.swing.JButton();
         btnProductos = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
@@ -229,7 +228,7 @@ public final class frm_Principal extends javax.swing.JFrame {
                 btnLogoActionPerformed(evt);
             }
         });
-        GENERAL.add(btnLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 180, 180));
+        GENERAL.add(btnLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 180, 180));
 
         btnTrabajadores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/btnTrabajadores.png"))); // NOI18N
         btnTrabajadores.setBorder(null);
@@ -244,22 +243,7 @@ public final class frm_Principal extends javax.swing.JFrame {
                 btnTrabajadoresActionPerformed(evt);
             }
         });
-        GENERAL.add(btnTrabajadores, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 250, 220, 80));
-
-        btnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/btnClientes.png"))); // NOI18N
-        btnClientes.setBorder(null);
-        btnClientes.setBorderPainted(false);
-        btnClientes.setContentAreaFilled(false);
-        btnClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnClientes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnClientes.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/btnClientesPress.png"))); // NOI18N
-        btnClientes.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/btnClientesSelect.png"))); // NOI18N
-        btnClientes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClientesActionPerformed(evt);
-            }
-        });
-        GENERAL.add(btnClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 340, 220, 80));
+        GENERAL.add(btnTrabajadores, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 220, 80));
 
         btnVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/btnVentas.png"))); // NOI18N
         btnVentas.setBorder(null);
@@ -274,7 +258,7 @@ public final class frm_Principal extends javax.swing.JFrame {
                 btnVentasActionPerformed(evt);
             }
         });
-        GENERAL.add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 430, 220, 80));
+        GENERAL.add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 220, 80));
 
         btnProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/btnProductos.png"))); // NOI18N
         btnProductos.setBorder(null);
@@ -289,7 +273,7 @@ public final class frm_Principal extends javax.swing.JFrame {
                 btnProductosActionPerformed(evt);
             }
         });
-        GENERAL.add(btnProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 520, 220, 80));
+        GENERAL.add(btnProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 490, 220, 80));
 
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/img/imgPrincipal/btnSalir.png"))); // NOI18N
         btnSalir.setBorder(null);
@@ -381,10 +365,6 @@ public final class frm_Principal extends javax.swing.JFrame {
         setTitle("IMPRO_ATS [Trabajadores]");
     }//GEN-LAST:event_btnTrabajadoresActionPerformed
 
-    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnClientesActionPerformed
-
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
         menuVentas abrir = new menuVentas();
         abrir.setSize(960, 590);
@@ -475,7 +455,6 @@ public final class frm_Principal extends javax.swing.JFrame {
     public static javax.swing.JPanel MenuBar;
     public static javax.swing.JButton btnBlockNotas;
     public static javax.swing.JButton btnCalculadora;
-    public static javax.swing.JButton btnClientes;
     public static javax.swing.JButton btnCorreo;
     public static javax.swing.JButton btnExcel;
     public static javax.swing.JButton btnLogo;

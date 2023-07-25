@@ -52,6 +52,7 @@ public final class HistorialVentas extends javax.swing.JPanel {
         return columnFilters;
     }
 
+    
     private Map<String, Integer> hola() {
         Map<String, Integer> columnasAMostrar = new HashMap<>();
         columnasAMostrar.put("id", 0);
@@ -71,7 +72,7 @@ public final class HistorialVentas extends javax.swing.JPanel {
         sp.setOrientation(JScrollBar.HORIZONTAL);
         scrollPane.setHorizontalScrollBar(sp);
     }
-
+    
     private String fechaInicio = Proceso.FechaActual();
     private String fechaFinal = Proceso.FechaActual();
 
@@ -121,7 +122,7 @@ public final class HistorialVentas extends javax.swing.JPanel {
 
     private Map<String, Integer> asignarColumnasTabla() {
         Map<String, Integer> columnas = new HashMap<>();
-
+        
         columnas.put("id", 0);
         columnas.put("sede", 1);
         columnas.put("dniTrabajador", 2);
